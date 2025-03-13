@@ -1,0 +1,7 @@
+principais critérios:
+
+	Processo da venda:
+		Todo processo do cliente pegar a comida, ser descontado o dinheiro, tempo randômico do entregador chegar e o cliente aceitar
+	A carteira:
+		O cliente pode começar com um valor fixo e pode gastar o dinheiro que ele tem la basiacamente
+	CRUD: Todo CRUD do restaurante e da comida, se possível por um filtro no cardápio do restaurante
