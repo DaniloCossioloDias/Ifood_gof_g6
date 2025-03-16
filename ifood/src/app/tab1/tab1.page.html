@@ -1,19 +1,19 @@
-
-
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Home
-    </ion-title>
+    <ion-title>Restaurantes</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let restaurante of restaurantes" (click)="abrirRestaurante(restaurante)">
+      <ion-avatar slot="start">
+        <img [src]="restaurante.imagem" />
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ restaurante.nome }}</h2>
+        <p>{{ restaurante.descricao }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
