@@ -10,7 +10,7 @@ import { IonNav } from '@ionic/angular/standalone';
   templateUrl: './produtos.page.html',
   styleUrls: ['./produtos.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonItem, CommonModule, IonNav]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonItem, CommonModule]
 })
 export class ProdutosPage implements OnInit {
   restaurante: any;

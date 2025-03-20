@@ -63,7 +63,7 @@ export class Tab1Page {
     },
     {
       id: 5,
-      nome: 'Paul Mole',
+      nome: 'Restaurante',
       descricao: 'aaaaaaaaaaaaaaa',
       imagem: 'assets/images/PaulMole.jpg',
       produtos: [

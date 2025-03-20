@@ -1,13 +1,12 @@
 <ion-header>
   <ion-toolbar>
-    <ion-nav [root]="component"></ion-nav> <!-- Definindo o root com o componente -->
     <ion-title>{{ restaurante?.nome }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let produto of produtos" (click)="navegarParaDetalhes(produto)">
+    <ion-item *ngFor="let produto of produtos">
       <ion-label>
         <h2>{{ produto.nome }}</h2>
         <p>Preço: R$ {{ produto.preco }}</p>
