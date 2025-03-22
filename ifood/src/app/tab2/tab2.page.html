@@ -1,17 +1,28 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Histórico de pedidos
-    </ion-title>
+    <ion-title>Carrinho</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-list *ngIf="carrinho.length > 0; else vazio">
+    <ion-item *ngFor="let item of carrinho; let i = index">
+      <ion-label>
+        <h2>{{ item.nome }}</h2>
+        <p>Preço: R$ {{ item.preco }}</p>
+      </ion-label>
+      <ion-button color="danger" slot="end" (click)="removerProduto(i)">Remover</ion-button>
+    </ion-item>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+    <ion-item lines="full">
+      <ion-label><strong>Total:</strong></ion-label>
+      <ion-label slot="end"><strong>R$ {{ total }}</strong></ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ng-template #vazio>
+    <ion-item>
+      <ion-label>Seu carrinho está vazio.</ion-label>
+    </ion-item>
+  </ng-template>
 </ion-content>

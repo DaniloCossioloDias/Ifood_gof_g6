@@ -1,3 +1,4 @@
+
 <ion-header>
   <ion-toolbar>
     <ion-title>{{ restaurante?.nome }}</ion-title>
@@ -6,11 +7,14 @@
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let produto of produtos">
+    <ion-item *ngFor="let produto of produtos"> 
       <ion-label>
         <h2>{{ produto.nome }}</h2>
         <p>Preço: R$ {{ produto.preco }}</p>
       </ion-label>
+      <ion-button slot="end" fill="clear" (click)="adicionarAoCarrinho(produto)">
+        <img src="assets/icon/shopping-cart.png" alt="carrinho" style="width: 24px; height: 24px;">
+      </ion-button>      
     </ion-item>
   </ion-list>
 </ion-content>
