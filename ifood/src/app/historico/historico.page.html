@@ -1,0 +1,20 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-title>Histórico de Pedidos</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <ion-list>
+      <ion-item *ngFor="let order of orders">
+        <ion-label>
+          <h2>Pedido #{{ order.id }}</h2>
+          <p><strong>Restaurante:</strong> {{ order.restaurant.name }}</p>
+          <p><strong>Valor Total:</strong> R$ {{ order.totalPrice | number:'1.2-2' }}</p>
+          <p><strong>Data:</strong> {{ order.createdAt | date:'dd/MM/yyyy HH:mm' }}</p>
+        </ion-label>
+        <ion-badge color="success">Concluído</ion-badge>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+  

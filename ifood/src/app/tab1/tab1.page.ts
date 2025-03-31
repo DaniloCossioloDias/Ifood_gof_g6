@@ -12,10 +12,10 @@ import { Router } from '@angular/router';
     IonToolbar,
     IonTitle,
     IonContent,
-    IonList,       // Importando IonList
-    IonItem,       // Importando IonItem
-    IonAvatar,     // Importando IonAvatar
-    IonLabel,      // Importando IonLabel
+    IonList,       
+    IonItem,       
+    IonAvatar,     
+    IonLabel,      
     CommonModule
   ],
 })
@@ -77,7 +77,7 @@ export class Tab1Page {
 
   abrirRestaurante(restaurante: any) {
     this.router.navigate(['/produtos', restaurante.id], {
-      state: { restaurante }  // Passando o objeto restaurante pelo estado
+      state: { restaurante } 
     });
   }
 }
