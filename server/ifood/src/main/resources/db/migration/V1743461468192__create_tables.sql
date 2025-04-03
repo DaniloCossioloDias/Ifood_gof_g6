@@ -3,5 +3,5 @@ CREATE TABLE IF NOT EXISTS restaurant (
     name varchar(50) NOT NULL,
     description varchar(1000) NOT NULL,
     address varchar(200) NOT NULL,
-    created_at date NOT NULL,
+    created_at date NOT NULL
 );
