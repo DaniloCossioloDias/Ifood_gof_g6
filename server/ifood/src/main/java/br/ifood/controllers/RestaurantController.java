@@ -13,6 +13,7 @@ import br.ifood.payloads.restaurant.RestaurantDataPayload;
 import br.ifood.services.RestaurantService;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @RequestMapping(path = "/restaurant")
@@ -69,5 +70,17 @@ public class RestaurantController {
     @GetMapping("/{id}")
     public ResponseEntity<Restaurant> get(@PathVariable Long id) {
         return ResponseEntity.ok(this.restaurantService.get(id));
+    }
+
+    /**
+     * Deleta um restaurante à partir de um ID.
+     * 
+     * @param id ID do restaurante a ser delado.
+     * @return Status OK.
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        this.restaurantService.delete(id);
+        return ResponseEntity.ok(null);
     }
 }

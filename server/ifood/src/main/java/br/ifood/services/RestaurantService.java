@@ -64,4 +64,16 @@ public class RestaurantService {
         updatedRestaurant.setId(existingRestaurant.getId());
         return this.restaurantRepository.save(updatedRestaurant);
     }
+
+    /**
+     * Deleta um restaurante à partir de um ID. Caso não encontrado uma excessão
+     * é lançada como 404.
+     * 
+     * @param id ID do restaurante a ser deletado.
+     * @throws RestaurantNotFoundException Excessão que lança 404 automaticamente.
+     */
+    public void delete(Long id) throws RestaurantNotFoundException {
+        Restaurant existingRestaurante = this.get(id);
+        this.restaurantRepository.delete(existingRestaurante);
+    }
 }
