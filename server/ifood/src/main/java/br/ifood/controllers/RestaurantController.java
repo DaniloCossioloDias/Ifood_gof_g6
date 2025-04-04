@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 import br.ifood.models.Restaurant;
 import br.ifood.payloads.restaurant.RestaurantDataPayload;
 import br.ifood.services.RestaurantService;
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@RequestMapping(path = "/restaurant")
+@RequestMapping(path = "restaurant")
 @RestController
 public class RestaurantController {
     private final RestaurantService restaurantService;
@@ -30,6 +32,7 @@ public class RestaurantController {
      * A lógica de acessar o banco e demais tratamentos na lista de retorno
      * deve estar contigo no método `getAll` do RestaurantService.
      */
+    @GetMapping
     public ResponseEntity<List<Restaurant>> getAll() {
         return ResponseEntity.ok(this.restaurantService.getAll());
     }
@@ -42,7 +45,7 @@ public class RestaurantController {
      * @return Retorna o restaurante criado.
      */
     @PostMapping("/new")
-    public ResponseEntity<Restaurant> create(@RequestBody RestaurantDataPayload restaurantDataPayload) {
+    public ResponseEntity<Restaurant> create(@RequestBody @Valid RestaurantDataPayload restaurantDataPayload) {
         return ResponseEntity.ok(this.restaurantService.create(restaurantDataPayload));
     }
 
@@ -57,7 +60,7 @@ public class RestaurantController {
      */
     @PutMapping("update/{id}")
     public ResponseEntity<Restaurant> update(@PathVariable Long id,
-            @RequestBody RestaurantDataPayload restaurantDataPayload) {
+            @RequestBody @Valid RestaurantDataPayload restaurantDataPayload) {
         return ResponseEntity.ok(this.restaurantService.update(id, restaurantDataPayload));
     }
 
