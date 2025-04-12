@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Editar Restaurante</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label position="stacked">Nome</ion-label>
+      <ion-input [(ngModel)]="restaurante.name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Descrição</ion-label>
+      <ion-textarea [(ngModel)]="restaurante.description"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Endereço</ion-label>
+      <ion-input [(ngModel)]="restaurante.address"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" color="success" (click)="salvarAlteracoes()">
+    Salvar Alterações
+  </ion-button>
+</ion-content>

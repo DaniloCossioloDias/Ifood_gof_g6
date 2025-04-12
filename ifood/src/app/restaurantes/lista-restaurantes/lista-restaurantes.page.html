@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Restaurantes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let restaurante of restaurantes">
+      <ion-label>
+        <h2>{{ restaurante.name }}</h2>
+        <p>{{ restaurante.description }}</p>
+        <p><strong>Endereço:</strong> {{ restaurante.address }}</p>
+        <p><strong>Criado em:</strong> {{ restaurante.createdAt | date }}</p>
+      </ion-label>  
+      <ion-button 
+        size="small" 
+        fill="clear" 
+        (click)="editarRestaurante(restaurante.id)" 
+        style="margin-left: auto; margin-right: 10px;">
+        <img src="../../../assets/icon/editing.png" alt="Editar" style="width: 20px; height: 20px;" />
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="novoRestaurante()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
