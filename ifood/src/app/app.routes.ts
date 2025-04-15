@@ -36,4 +36,8 @@ export const routes: Routes = [
         (m) => m.EditarRestaurantePage
       ),
   },
+  {
+    path: 'tab1',
+    loadComponent: () => import('./tab1/tab1.page').then( m => m.Tab1Page)
+  },
 ];

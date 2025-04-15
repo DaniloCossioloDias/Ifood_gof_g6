@@ -9,8 +9,8 @@ export const routes: Routes = [
       {
         path: 'tab1',
         loadComponent: () =>
-          import('../restaurantes/lista-restaurantes/lista-restaurantes.page').then(
-            (m) => m.ListaRestaurantesPage
+          import('../tab1/tab1.page').then(
+            (m) => m.Tab1Page
           ),
       },
       {
