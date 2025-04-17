@@ -9,11 +9,11 @@ import {
   IonList, 
   IonItem, 
   IonLabel, 
-  IonAvatar,
-  IonButton,
-  IonFab,
-  IonFabButton,
-  IonIcon
+  IonButton, 
+  IonIcon, 
+  IonButtons, 
+  IonFab, 
+  IonFabButton 
 } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { RestauranteService } from 'src/app/services/restaurante.service';
@@ -27,9 +27,9 @@ export interface IRestaurant {
 }
 
 @Component({
-  selector: 'app-tab1',
-  templateUrl: './tab1.page.html',
-  styleUrls: ['./tab1.page.scss'],
+  selector: 'app-lista-restaurantes',
+  templateUrl: './lista-restaurantes.page.html',
+  styleUrls: ['./lista-restaurantes.page.scss'],
   standalone: true,
   imports: [
     CommonModule,
@@ -41,36 +41,43 @@ export interface IRestaurant {
     IonList,
     IonItem,
     IonLabel,
-    IonAvatar,
     IonButton,
-    IonFab, 
-    IonFabButton, 
-    IonIcon 
+    IonIcon,
+    IonButtons,
+    IonFab,
+    IonFabButton,
   ],
 })
-export class Tab1Page implements OnInit {
+export class ListaRestaurantesPage implements OnInit {
   restaurantes: IRestaurant[] = [];
 
   constructor(
-    private restauranteService: RestauranteService,
-    private router: Router 
+    private router: Router,
+    private restauranteService: RestauranteService
   ) {}
 
   ngOnInit() {
-    this.carregarRestaurantes();
+    this.atualizarListaRestaurantes();
   }
 
-  carregarRestaurantes() {
+  ionViewWillEnter() {
+    this.atualizarListaRestaurantes();
+  }
+
+  atualizarListaRestaurantes() {
     this.restaurantes = this.restauranteService.getRestaurantes();
   }
 
-  abrirRestaurante() {
-    this.router.navigate(['/crud/restaurantes']);
+  novoRestaurante() {
+    this.router.navigate(['/crud/restaurante/new']);
   }
 
-  abrirProdutos(restaurante: any) {
-    this.router.navigate(['/produtos', restaurante.id], {
-      state: { restaurante } 
-    });
+  editarRestaurante(id: number) {
+    this.router.navigate(['/crud/restaurante', id]);
+  }
+
+  excluirRestaurante(id: number) {
+    this.restaurantes = this.restaurantes.filter(restaurante => restaurante.id !== id);
+    this.restauranteService.deleteRestaurante(id); 
   }
 }

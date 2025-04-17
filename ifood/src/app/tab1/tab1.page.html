@@ -6,14 +6,21 @@
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let restaurante of restaurantes" (click)="abrirRestaurante(restaurante)">
+    <ion-item *ngFor="let restaurante of restaurantes" (click)="abrirProdutos(restaurante)">
       <ion-avatar slot="start">
-        <img [src]="restaurante.imagem" />
+        
       </ion-avatar>
       <ion-label>
-        <h2>{{ restaurante.nome }}</h2>
-        <p>{{ restaurante.descricao }}</p>
+        <h2>{{ restaurante.name }}</h2>
+        <p>{{ restaurante.description }}</p>
       </ion-label>
     </ion-item>
   </ion-list>
+
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="abrirRestaurante()">
+      
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

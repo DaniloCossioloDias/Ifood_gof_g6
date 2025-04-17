@@ -9,7 +9,9 @@ export const routes: Routes = [
       {
         path: 'tab1',
         loadComponent: () =>
-          import('../tab1/tab1.page').then((m) => m.Tab1Page),
+          import('../tab1/tab1.page').then(
+            (m) => m.Tab1Page
+          ),
       },
       {
         path: 'tab2',
@@ -23,7 +25,7 @@ export const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/tabs/tab1',
+        redirectTo: '/tabs/restaurantes',
         pathMatch: 'full',
       },
     ],
