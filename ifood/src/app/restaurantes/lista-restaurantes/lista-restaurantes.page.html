@@ -13,12 +13,23 @@
         <p><strong>Endereço:</strong> {{ restaurante.address }}</p>
         <p><strong>Criado em:</strong> {{ restaurante.createdAt | date }}</p>
       </ion-label>  
+
+      <!-- Botão de Editar -->
       <ion-button 
         size="small" 
         fill="clear" 
         (click)="editarRestaurante(restaurante.id)" 
         style="margin-left: auto; margin-right: 10px;">
         <img src="../../../assets/icon/editing.png" alt="Editar" style="width: 20px; height: 20px;" />
+      </ion-button>
+
+      <!-- Botão de Excluir -->
+      <ion-button 
+          size="small" 
+          fill="clear" 
+          color="danger" 
+          (click)="excluirRestaurante(restaurante.id)">
+          <img src="../../../assets/icon/icons8-lixo-50.png" alt="Excluir" style="width: 20px; height: 20px;" />
       </ion-button>
     </ion-item>
   </ion-list>

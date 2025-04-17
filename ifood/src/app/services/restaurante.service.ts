@@ -4,9 +4,9 @@ import { IRestaurant } from '../restaurantes/lista-restaurantes/lista-restaurant
 @Injectable({
   providedIn: 'root',
 })
-
-//restaurantes gerados pelo gpt, tem q mudar aqui pra adicionar o backend provavelmente
 export class RestauranteService {
+
+  //dados gerados pelo gpt acredito q quando for adicionar o backend vai ter q mudar aqui
   private restaurantes: IRestaurant[] = [
     {
       id: 1,
@@ -26,12 +26,26 @@ export class RestauranteService {
 
   constructor() {}
 
+  /**
+   * Retorna todos os restaurantes.
+   */
   getRestaurantes(): IRestaurant[] {
     return this.restaurantes;
   }
 
-
+  /**
+   * Adiciona um novo restaurante.
+   * @param restaurante Restaurante a ser adicionado.
+   */
   addRestaurante(restaurante: IRestaurant): void {
     this.restaurantes.push(restaurante);
+  }
+
+  /**
+   * Remove um restaurante pelo ID.
+   * @param id ID do restaurante a ser removido.
+   */
+  deleteRestaurante(id: number): void {
+    this.restaurantes = this.restaurantes.filter(restaurante => restaurante.id !== id);
   }
 }

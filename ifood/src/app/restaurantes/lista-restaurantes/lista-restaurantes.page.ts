@@ -75,4 +75,9 @@ export class ListaRestaurantesPage implements OnInit {
   editarRestaurante(id: number) {
     this.router.navigate(['/crud/restaurante', id]);
   }
+
+  excluirRestaurante(id: number) {
+    this.restaurantes = this.restaurantes.filter(restaurante => restaurante.id !== id);
+    this.restauranteService.deleteRestaurante(id); 
+  }
 }
