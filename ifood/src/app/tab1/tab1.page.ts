@@ -9,8 +9,13 @@ import {
   IonList, 
   IonItem, 
   IonLabel, 
-  IonAvatar 
+  IonAvatar,
+  IonButton,
+  IonFab,
+  IonFabButton,
+  IonIcon
 } from '@ionic/angular/standalone';
+import { Router } from '@angular/router';
 import { RestauranteService } from 'src/app/services/restaurante.service';
 
 export interface IRestaurant {
@@ -37,12 +42,19 @@ export interface IRestaurant {
     IonItem,
     IonLabel,
     IonAvatar,
+    IonButton,
+    IonFab, 
+    IonFabButton, 
+    IonIcon 
   ],
 })
 export class Tab1Page implements OnInit {
   restaurantes: IRestaurant[] = [];
 
-  constructor(private restauranteService: RestauranteService) {}
+  constructor(
+    private restauranteService: RestauranteService,
+    private router: Router 
+  ) {}
 
   ngOnInit() {
     this.carregarRestaurantes();
@@ -50,5 +62,15 @@ export class Tab1Page implements OnInit {
 
   carregarRestaurantes() {
     this.restaurantes = this.restauranteService.getRestaurantes();
+  }
+
+  abrirRestaurante() {
+    this.router.navigate(['/crud/restaurantes']);
+  }
+
+  abrirProdutos(restaurante: any) {
+    this.router.navigate(['/produtos', restaurante.id], {
+      state: { restaurante } 
+    });
   }
 }

@@ -3,9 +3,10 @@
     <ion-title>Restaurantes</ion-title>
   </ion-toolbar>
 </ion-header>
+
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let restaurante of restaurantes">
+    <ion-item *ngFor="let restaurante of restaurantes" (click)="abrirProdutos(restaurante)">
       <ion-avatar slot="start">
         
       </ion-avatar>
@@ -15,4 +16,11 @@
       </ion-label>
     </ion-item>
   </ion-list>
+
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="abrirRestaurante()">
+      
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
