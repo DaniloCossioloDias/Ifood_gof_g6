@@ -1,26 +1,175 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Restaurantes</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+  <div style="
+    text-align: center; 
+    padding: 5px; 
+    font-size: 12px; 
+    font-family: 'Poppins', sans-serif; 
+    color: #888; 
+    font-weight: 500;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+  ">
+    <ion-icon name="location-outline" style="margin-right: 5px; font-size: 14px; color: #ff4d4d;"></ion-icon>
+    Rua Exemplo, 123 - Bairro, Cidade
+  </div>
+
+  <ion-toolbar>
+    <ion-card style="
+      margin: 15px; 
+      border-radius: 15px; 
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+      overflow: hidden;
+      background-color: #fff5f5;
+    ">
+      <ion-card-content>
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div>
+            <p style="
+              font-size: 16px; 
+              font-family: 'Poppins', sans-serif; 
+              color: #555; 
+              margin: 0;
+            ">
+              Bem-vindo(a),
+            </p>
+            <p style="
+              font-size: 20px; 
+              font-weight: bold; 
+              color: #ff4d4d; 
+              margin: 5px 0 0;
+            ">
+              Admin!
+            </p>
+          </div>
+          <div>
+            <img src="../../assets/images/entregador.png" alt="Entregador"
+              style="
+                width: 120px; 
+                height: 150px; 
+                object-fit: contain;
+              ">
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </ion-toolbar>
+
+  <div style="padding: 10px;">
+    <div style="display: flex; overflow-x: auto; gap: 10px; padding: 10px 0;">
+      <div style="
+        min-width: 100px; 
+        height: 100px; 
+        background-color: #ff4d4d; 
+        border-radius: 15px; 
+        display: flex; 
+        flex-direction: column; 
+        justify-content: center; 
+        align-items: center; 
+        color: white; 
+        font-family: 'Poppins', sans-serif; 
+        font-size: 14px; 
+        font-weight: bold;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      ">
+        <ion-icon name="fast-food-outline" style="font-size: 24px; margin-bottom: 5px;"></ion-icon>
+        Burger
+      </div>
+
+      <div style="
+        min-width: 100px; 
+        height: 100px; 
+        background-color: #ffa726; 
+        border-radius: 15px; 
+        display: flex; 
+        flex-direction: column; 
+        justify-content: center; 
+        align-items: center; 
+        color: white; 
+        font-family: 'Poppins', sans-serif; 
+        font-size: 14px; 
+        font-weight: bold;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      ">
+        <ion-icon name="pizza-outline" style="font-size: 24px; margin-bottom: 5px;"></ion-icon>
+        Pizza
+      </div>
+
+      <div style="
+        min-width: 100px; 
+        height: 100px; 
+        background-color: #66bb6a; 
+        border-radius: 15px; 
+        display: flex; 
+        flex-direction: column; 
+        justify-content: center; 
+        align-items: center; 
+        color: white; 
+        font-family: 'Poppins', sans-serif; 
+        font-size: 14px; 
+        font-weight: bold;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      ">
+        <ion-icon name="leaf-outline" style="font-size: 24px; margin-bottom: 5px;"></ion-icon>
+        Salada
+      </div>
+
+      <div style="
+        min-width: 100px; 
+        height: 100px; 
+        background-color: #42a5f5; 
+        border-radius: 15px; 
+        display: flex; 
+        flex-direction: column; 
+        justify-content: center; 
+        align-items: center; 
+        color: white; 
+        font-family: 'Poppins', sans-serif; 
+        font-size: 14px; 
+        font-weight: bold;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      ">
+        <ion-icon name="wine-outline" style="font-size: 24px; margin-bottom: 5px;"></ion-icon>
+        Bebidas
+      </div>
+
+      <!-- Categoria 5 -->
+      <div style="
+        min-width: 100px; 
+        height: 100px; 
+        background-color: #ab47bc; 
+        border-radius: 15px; 
+        display: flex; 
+        flex-direction: column; 
+        justify-content: center; 
+        align-items: center; 
+        color: white; 
+        font-family: 'Poppins', sans-serif; 
+        font-size: 14px; 
+        font-weight: bold;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      ">
+        <ion-icon name="ice-cream-outline" style="font-size: 24px; margin-bottom: 5px;"></ion-icon>
+        Sobremesas
+      </div>
+    </div>
+  </div>
+
   <ion-list>
     <ion-item *ngFor="let restaurante of restaurantes" (click)="abrirProdutos(restaurante)">
       <ion-avatar slot="start">
-        
+      
       </ion-avatar>
       <ion-label>
-        <h2>{{ restaurante.name }}</h2>
-        <p>{{ restaurante.description }}</p>
+        <h2 style="color: #ff4d4d;">{{ restaurante.name }}</h2>
+        <p style="color: #888;">{{ restaurante.description }}</p>
       </ion-label>
     </ion-item>
   </ion-list>
 
-
-  <div style="position: fixed; bottom: 20px; left: 0; right: 0; padding: 0 16px;">
-    <ion-button expand="block" color="primary" (click)="abrirRestaurante()">
-      Criar Restaurante
-    </ion-button>
-  </div>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button style="background-color: #ff4d4d;" (click)="abrirRestaurante()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

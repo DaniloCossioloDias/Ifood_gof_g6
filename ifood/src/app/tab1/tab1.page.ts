@@ -13,7 +13,12 @@ import {
   IonButton,
   IonFab,
   IonFabButton,
-  IonIcon
+  IonIcon,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardSubtitle,
+  IonCardContent
 } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { RestauranteService } from 'src/app/services/restaurante.service';
@@ -45,7 +50,12 @@ export interface IRestaurant {
     IonButton,
     IonFab, 
     IonFabButton, 
-    IonIcon 
+    IonIcon,
+    IonCard, 
+    IonCardHeader, 
+    IonCardTitle, 
+    IonCardSubtitle, 
+    IonCardContent
   ],
 })
 export class Tab1Page implements OnInit {
