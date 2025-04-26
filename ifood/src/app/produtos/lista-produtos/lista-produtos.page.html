@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/tab1"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Itens do {{ restaurante?.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="!mostrarLista">
+    <ion-list>
+      <ion-item *ngFor="let produto of produtos">
+        <ion-label>
+          <h2>{{ produto.name }}</h2>
+          <p>Preço: R$ {{ produto.price }}</p>
+          <p>Disponível: {{ produto.available ? 'Sim' : 'Não' }}</p>
+        </ion-label>
+        <ion-button size="small" color="success" (click)="adicionarAoCarrinho(produto)">
+          Adicionar ao Carrinho
+        </ion-button>
+      </ion-item>
+    </ion-list>
+
+    <div style="position: fixed; bottom: 20px; left: 0; right: 0; padding: 0 16px;">
+      <ion-button expand="block" color="primary" (click)="mostrarLista = true">
+        Adicionar Produtos
+      </ion-button>
+    </div>
+  </div>
+
+  <div *ngIf="mostrarLista">
+    <ion-list>
+      <ion-item *ngFor="let produto of produtos">
+        <ion-label>
+          <h2>{{ produto.name }}</h2>
+          <p>Preço: R$ {{ produto.price }}</p>
+          <p>Disponível: {{ produto.available ? 'Sim' : 'Não' }}</p>
+        </ion-label>
+        <ion-button size="small" fill="clear" (click)="editarProduto(produto.id)">
+          Editar
+        </ion-button>
+        <ion-button size="small" fill="clear" color="danger" (click)="excluirProduto(produto.id)">
+          Excluir
+        </ion-button>
+      </ion-item>
+    </ion-list>
+
+    <div style="position: fixed; bottom: 20px; left: 0; right: 0; padding: 0 16px;">
+      <ion-button expand="block" color="primary" (click)="novoProduto()">
+        Criar Produto
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

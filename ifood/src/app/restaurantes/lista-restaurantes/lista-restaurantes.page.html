@@ -14,7 +14,6 @@
         <p><strong>Criado em:</strong> {{ restaurante.createdAt | date }}</p>
       </ion-label>  
 
-      <!-- Botão de Editar -->
       <ion-button 
         size="small" 
         fill="clear" 
@@ -23,7 +22,6 @@
         <img src="../../../assets/icon/editing.png" alt="Editar" style="width: 20px; height: 20px;" />
       </ion-button>
 
-      <!-- Botão de Excluir -->
       <ion-button 
           size="small" 
           fill="clear" 
@@ -36,7 +34,7 @@
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="novoRestaurante()">
-      <ion-icon name="add"></ion-icon>
+      <img src=";" alt="Adicionar" style="width: 24px; height: 24px;" />
     </ion-fab-button>
   </ion-fab>
 </ion-content>

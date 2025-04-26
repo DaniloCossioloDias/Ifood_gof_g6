@@ -69,7 +69,7 @@ export class Tab1Page implements OnInit {
   }
 
   abrirProdutos(restaurante: any) {
-    this.router.navigate(['/produtos', restaurante.id], {
+    this.router.navigate(['/crud/produtos', restaurante.id], {
       state: { restaurante } 
     });
   }
