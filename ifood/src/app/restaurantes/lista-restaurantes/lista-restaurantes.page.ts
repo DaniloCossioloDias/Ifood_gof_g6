@@ -13,7 +13,8 @@ import {
   IonIcon, 
   IonButtons, 
   IonFab, 
-  IonFabButton 
+  IonFabButton,
+  IonBackButton 
 } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { RestauranteService } from 'src/app/services/restaurante.service';

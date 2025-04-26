@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/tab1"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Criar Produto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="salvarProduto()">
+    <ion-item>
+      <ion-label position="floating">Nome</ion-label>
+      <ion-input [(ngModel)]="produto.name" name="name" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Descrição</ion-label>
+      <ion-textarea [(ngModel)]="produto.description" name="description"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Preço</ion-label>
+      <ion-input type="number" [(ngModel)]="produto.price" name="price" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Disponível</ion-label>
+      <ion-toggle [(ngModel)]="produto.available" name="available"></ion-toggle>
+    </ion-item>
+    <ion-button expand="block" type="submit" color="primary">Salvar</ion-button>
+  </form>
+</ion-content>

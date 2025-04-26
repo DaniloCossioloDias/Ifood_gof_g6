@@ -5,8 +5,6 @@ import { IRestaurant } from '../restaurantes/lista-restaurantes/lista-restaurant
   providedIn: 'root',
 })
 export class RestauranteService {
-
-  //dados gerados pelo gpt acredito q quando for adicionar o backend vai ter q mudar aqui
   private restaurantes: IRestaurant[] = [
     {
       id: 1,
@@ -31,6 +29,14 @@ export class RestauranteService {
    */
   getRestaurantes(): IRestaurant[] {
     return this.restaurantes;
+  }
+
+  /**
+   * Retorna um restaurante pelo ID.
+   * @param id ID do restaurante.
+   */
+  getRestauranteById(id: number): IRestaurant | undefined {
+    return this.restaurantes.find(restaurante => restaurante.id === id);
   }
 
   /**

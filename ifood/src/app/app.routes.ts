@@ -11,11 +11,6 @@ export const routes: Routes = [
       import('./pedidos/pedidos.page').then((m) => m.PedidosPage),
   },
   {
-    path: 'produtos/:id',
-    loadComponent: () =>
-      import('./produtos/produtos.page').then((m) => m.ProdutosPage),
-  },
-  {
     path: 'crud/restaurantes',
     loadComponent: () =>
       import('./restaurantes/lista-restaurantes/lista-restaurantes.page').then(
@@ -37,7 +32,28 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'crud/produtos/:id',
+    loadComponent: () =>
+      import('./produtos/lista-produtos/lista-produtos.page').then(
+        (m) => m.ListaProdutosPage
+      ),
+  },
+  {
+    path: 'crud/produto/new',
+    loadComponent: () =>
+      import('./produtos/novo-produto/novo-produto.page').then(
+        (m) => m.NovoProdutoPage
+      ),
+  },
+  {
+    path: 'crud/produto/:id',
+    loadComponent: () =>
+      import('./produtos/editar-produto/editar-produto.page').then(
+        (m) => m.EditarProdutoPage
+      ),
+  },
+  {
     path: 'tab1',
-    loadComponent: () => import('./tab1/tab1.page').then( m => m.Tab1Page)
+    loadComponent: () => import('./tab1/tab1.page').then((m) => m.Tab1Page),
   },
 ];

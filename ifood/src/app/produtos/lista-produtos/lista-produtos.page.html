@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/tab1"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Itens do {{ restaurante?.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Primeira parte: Botão "Criar Produto" -->
+  <div *ngIf="!mostrarLista">
+    <ion-list>
+      <ion-item *ngFor="let produto of produtos">
+        <ion-label>
+          <h2>{{ produto.name }}</h2>
+          <p>Preço: R$ {{ produto.price }}</p>
+          <p>Disponível: {{ produto.available ? 'Sim' : 'Não' }}</p>
+        </ion-label>
+        <ion-button size="small" color="success" (click)="adicionarAoCarrinho(produto)">
+          Adicionar ao Carrinho
+        </ion-button>
+      </ion-item>
+    </ion-list>
+
+    <!-- Botão expandido para criar produto -->
+    <div style="position: fixed; bottom: 20px; left: 0; right: 0; padding: 0 16px;">
+      <ion-button expand="block" color="primary" (click)="mostrarLista = true">
+        Criar Produto
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Segunda parte: Editar, Excluir e Botão Flutuante -->
+  <div *ngIf="mostrarLista">
+    <ion-list>
+      <ion-item *ngFor="let produto of produtos">
+        <ion-label>
+          <h2>{{ produto.name }}</h2>
+          <p>Preço: R$ {{ produto.price }}</p>
+          <p>Disponível: {{ produto.available ? 'Sim' : 'Não' }}</p>
+        </ion-label>
+        <ion-button size="small" fill="clear" (click)="editarProduto(produto.id)">
+          Editar
+        </ion-button>
+        <ion-button size="small" fill="clear" color="danger" (click)="excluirProduto(produto.id)">
+          Excluir
+        </ion-button>
+      </ion-item>
+    </ion-list>
+
+    <!-- Botão flutuante para criar produto -->
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="novoProduto()">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </div>
+</ion-content>
