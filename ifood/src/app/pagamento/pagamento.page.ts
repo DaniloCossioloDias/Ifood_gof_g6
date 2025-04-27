@@ -36,6 +36,6 @@ export class PagamentoPage implements OnInit {
   }
 
   voltar() {
-    console.log('Voltar para a página inicial');
+    window.location.href = '/tabs/tab1';
   }
 }
