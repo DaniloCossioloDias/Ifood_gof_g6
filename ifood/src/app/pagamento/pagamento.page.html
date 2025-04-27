@@ -7,11 +7,22 @@
 
 <ion-content>
   <div class="payment-container">
-    <h2>Total da Compra: R$ {{ total | number:'1.2-2' }}</h2>
-    <h3>Saldo Atual: R$ {{ balance | number:'1.2-2' }}</h3>
+    <div class="payment-summary">
+      <h2>Total da Compra</h2>
+      <p>R$ {{ total | number:'1.2-2' }}</p>
+    </div>
 
-    <ion-button expand="block" color="success" (click)="finalizarPagamento()">
-      Finalizar Pagamento
+    <div class="wallet-balance">
+      <h2>Saldo Atual</h2>
+      <p>R$ {{ balance | number:'1.2-2' }}</p>
+    </div>
+
+    <ion-button 
+      expand="block" 
+      color="success" 
+      [disabled]="isPaymentDisabled" 
+      (click)="finalizarPagamento()">
+      {{ isPaymentDisabled ? 'Pagamento Realizado' : 'Pagar' }}
     </ion-button>
 
     <div *ngIf="paymentSuccess === true" class="success-message">
