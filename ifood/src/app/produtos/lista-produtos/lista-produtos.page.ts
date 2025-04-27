@@ -19,6 +19,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
 import { RestauranteService } from 'src/app/services/restaurante.service';
+import { CartService } from 'src/app/services/cart.service'; // Importação do CartService
 import { IProduct } from 'src/app/interfaces/entities/product';
 import { IRestaurant } from 'src/app/interfaces/entities/restaurant';
 
@@ -49,14 +50,15 @@ export class ListaProdutosPage implements OnInit {
   produtos: IProduct[] = [];
   restauranteId: number | undefined;
   restaurante: IRestaurant | undefined;
-  mostrarLista: boolean = false; // Variável para alternar entre as listas
-  carrinho: IProduct[] = []; // Lista de produtos no carrinho
+  mostrarLista: boolean = false; 
+  carrinho: IProduct[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private productService: ProductService,
-    private restauranteService: RestauranteService
+    private restauranteService: RestauranteService,
+    private cartService: CartService
   ) {}
 
   ngOnInit() {
@@ -71,10 +73,8 @@ export class ListaProdutosPage implements OnInit {
     this.restauranteId = Number(this.route.snapshot.paramMap.get('id'));
 
     if (this.restauranteId) {
-      // Carrega os produtos do restaurante
       this.produtos = this.productService.getProductsByRestaurant(this.restauranteId);
 
-      // Carrega os dados do restaurante
       this.restaurante = this.restauranteService.getRestauranteById(this.restauranteId);
 
       if (!this.restaurante) {
@@ -86,7 +86,7 @@ export class ListaProdutosPage implements OnInit {
   }
 
   adicionarAoCarrinho(produto: IProduct) {
-    this.carrinho.push(produto);
+    this.cartService.adicionarAoCarrinho(produto);
     console.log('Produto adicionado ao carrinho:', produto);
   }
 

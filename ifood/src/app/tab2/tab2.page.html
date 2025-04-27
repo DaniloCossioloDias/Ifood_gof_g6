@@ -1,24 +1,28 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Carrinho</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
   <ion-list *ngIf="carrinho.length > 0; else vazio">
     <ion-item *ngFor="let item of carrinho; let i = index">
       <ion-label>
-        <h2>{{ item.nome }}</h2>
-        <p>Preço: R$ {{ item.preco }}</p>
+        <h2>{{ item.produto.name }}</h2>
+        <p>Preço: R$ {{ item.produto.price }}</p>
+        <p>Quantidade: {{ item.quantidade }}</p>
       </ion-label>
-      <ion-button color="danger" slot="end" (click)="removerProduto(i)">Remover</ion-button>
+      <div slot="end" class="quantity-buttons">
+        <ion-button color="warning" (click)="removerQuantidade(i)">-</ion-button>
+        <ion-button color="success" (click)="adicionarQuantidade(i)">+</ion-button>
+      </div>
+      <ion-button color="danger" slot="end" (click)="removerProduto(i)">Remover Produto</ion-button>
     </ion-item>
 
+    <!-- Total do carrinho -->
     <ion-item lines="full">
       <ion-label><strong>Total:</strong></ion-label>
-      <ion-label slot="end"><strong>R$ {{ total }}</strong></ion-label>
+      <ion-label slot="end"><strong>R$ {{ total | number:'1.2-2' }}</strong></ion-label>
     </ion-item>
   </ion-list>
+
+  <ion-button expand="block" color="success" [disabled]="total === 0" (click)="irParaPagamento()">
+    Finalizar Compra
+  </ion-button>
 
   <ng-template #vazio>
     <ion-item>

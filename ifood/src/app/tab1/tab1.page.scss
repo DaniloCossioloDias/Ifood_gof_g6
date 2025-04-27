@@ -1,0 +1,83 @@
+
+.address-bar {
+    text-align: center;
+    padding: 5px;
+    font-size: 12px;
+    font-family: 'Poppins', sans-serif;
+    color: #888;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .welcome-card {
+    margin: 15px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background-color: #fff5f5;
+  }
+  
+  .welcome-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .welcome-text {
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    color: #555;
+    margin: 0;
+  }
+  
+  .welcome-name {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ff4d4d;
+    margin: 5px 0 0;
+  }
+  
+  .delivery-image {
+    width: 120px;
+    height: 150px;
+    object-fit: contain;
+  }
+  
+  /* Categorias */
+  .categories-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    padding: 10px 0;
+  }
+  
+  .category {
+    min-width: 100px;
+    height: 100px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Lista de restaurantes */
+  .restaurant-name {
+    color: #ff4d4d;
+  }
+  
+  .restaurant-description {
+    color: #888;
+  }
+  
+  /* Botão flutuante */
+  .fab-button {
+    background-color: #ff4d4d;
+  }

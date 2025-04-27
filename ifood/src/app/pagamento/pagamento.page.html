@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Pagamento</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="payment-container">
+    <h2>Total da Compra: R$ {{ total | number:'1.2-2' }}</h2>
+    <h3>Saldo Atual: R$ {{ balance | number:'1.2-2' }}</h3>
+
+    <ion-button expand="block" color="success" (click)="finalizarPagamento()">
+      Finalizar Pagamento
+    </ion-button>
+
+    <div *ngIf="paymentSuccess === true" class="success-message">
+      <h3>Pagamento realizado com sucesso!</h3>
+      <ion-button expand="block" color="primary" (click)="voltar()">Voltar</ion-button>
+    </div>
+
+    <div *ngIf="paymentSuccess === false" class="error-message">
+      <h3>Saldo insuficiente para realizar o pagamento.</h3>
+      <ion-button expand="block" color="danger" (click)="voltar()">Voltar</ion-button>
+    </div>
+  </div>
+</ion-content>

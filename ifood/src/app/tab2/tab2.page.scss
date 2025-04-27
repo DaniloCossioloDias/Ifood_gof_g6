@@ -33,3 +33,8 @@ strong {
     font-style: normal;
     color: #000000;
 }
+
+.quantity-buttons {
+    display: flex;
+    gap: 8px; /* Espaço entre os botões */
+  }
