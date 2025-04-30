@@ -1,24 +1,37 @@
+<!-- src/app/lista-restaurantes/lista-restaurantes.page.html -->
 <ion-header>
+  <!-- Removido color="primary" daqui -->
   <ion-toolbar>
-    <ion-title>Restaurantes</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/tab1"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Gerenciar Restaurantes</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let restaurante of restaurantes">
+    <ion-item *ngFor="let restaurante of restaurantes" lines="none">
       <ion-label>
-        <h2>{{ restaurante.name }}</h2>
-        <p>{{ restaurante.description }}</p>
-        <p><strong>Endereço:</strong> {{ restaurante.address }}</p>
-        <p><strong>Criado em:</strong> {{ restaurante.createdAt | date }}</p>
+        <h2 class="restaurant-name-list">{{ restaurante.name }}</h2>
+        <p class="restaurant-detail">{{ restaurante.description }}</p>
+        <p class="restaurant-detail address">
+          <ion-icon name="location-outline" slot="start" aria-hidden="true"></ion-icon>
+          {{ restaurante.address }}
+        </p>
       </ion-label>
-      <ion-button size="small" fill="clear" (click)="editarRestaurante(restaurante.id)">
-        Editar
-      </ion-button>
-      <ion-button size="small" fill="clear" color="danger" (click)="excluirRestaurante(restaurante.id)">
-        Excluir
-      </ion-button>
+
+      <!-- Botões de Ação com Texto -->
+      <div slot="end" class="action-buttons">
+        <!-- Botão Editar com Texto -->
+        <ion-button fill="clear" size="small" (click)="editarRestaurante(restaurante.id)">
+          Editar
+        </ion-button>
+        <!-- Botão Excluir com Texto -->
+        <ion-button fill="clear" size="small" color="danger" (click)="excluirRestaurante(restaurante.id)">
+          Excluir
+        </ion-button>
+      </div>
     </ion-item>
   </ion-list>
 

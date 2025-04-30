@@ -1,20 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { 
-  IonContent, 
-  IonHeader, 
-  IonTitle, 
-  IonToolbar, 
-  IonList, 
-  IonItem, 
-  IonLabel, 
-  IonButton, 
-  IonIcon, 
-  IonButtons, 
-  IonFab, 
+import {
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+  IonList,
+  IonItem,
+  IonLabel,
+  IonButton,
+  IonIcon,
+  IonButtons,
+  IonFab,
   IonFabButton,
-  IonBackButton 
+  IonBackButton,
+  IonListHeader
 } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { RestauranteService } from 'src/app/services/restaurante.service';
@@ -47,6 +48,8 @@ export interface IRestaurant {
     IonButtons,
     IonFab,
     IonFabButton,
+    IonBackButton,
+    IonListHeader
   ],
 })
 export class ListaRestaurantesPage implements OnInit {
@@ -78,7 +81,8 @@ export class ListaRestaurantesPage implements OnInit {
   }
 
   excluirRestaurante(id: number) {
-    this.restaurantes = this.restaurantes.filter(restaurante => restaurante.id !== id);
-    this.restauranteService.deleteRestaurante(id); 
+    console.log('Excluindo restaurante ID:', id);
+    this.restauranteService.deleteRestaurante(id);
+    this.atualizarListaRestaurantes();
   }
 }

@@ -52,6 +52,9 @@ export class RestauranteService {
    * @param id ID do restaurante a ser removido.
    */
   deleteRestaurante(id: number): void {
+    const tamanhoAntes = this.restaurantes.length; // Log tamanho antes
     this.restaurantes = this.restaurantes.filter(restaurante => restaurante.id !== id);
+    const tamanhoDepois = this.restaurantes.length; // Log tamanho depois
+    console.log(`RestauranteService: deleteRestaurante ID ${id}. Tamanho antes: ${tamanhoAntes}, Tamanho depois: ${tamanhoDepois}`); // LOG ADICIONADO
   }
 }

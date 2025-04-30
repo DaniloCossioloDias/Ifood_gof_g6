@@ -1,0 +1,91 @@
+/* src/app/lista-restaurantes/lista-restaurantes.page.scss */
+
+ion-toolbar {
+    --background: #ff4d4d; // Cor vermelha
+    --color: #ffffff; // Cor do texto/ícones no toolbar
+  
+    ion-title {
+      font-weight: 600;
+    }
+  }
+  
+  ion-content {
+    --background: #f9f9f9;
+  }
+  
+  ion-list {
+    background: transparent;
+    padding: 8px 16px 80px 16px;
+    margin-top: 8px;
+  }
+  
+  ion-item {
+    --padding-start: 16px;
+    --inner-padding-end: 8px; // Espaço antes dos botões
+    --background: #ffffff;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    --border-color: transparent;
+    --detail-icon-color: var(--ion-color-medium, #666);
+    --detail-icon-font-size: 16px;
+    --detail-icon-margin-end: 6px;
+  }
+  
+  ion-label {
+    white-space: normal;
+  }
+  
+  .restaurant-name-list {
+    font-weight: 600;
+    color: #333;
+    font-size: 1em;
+    margin-bottom: 6px;
+  }
+  
+  .restaurant-detail {
+    color: #666;
+    font-size: 0.85em;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+  
+    &.address {
+      color: #444;
+    }
+  
+    ion-icon {
+       margin-inline-end: var(--detail-icon-margin-end);
+       font-size: var(--detail-icon-font-size);
+       color: var(--detail-icon-color);
+       min-width: 16px;
+    }
+  }
+  
+  .action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 4px; 
+  }
+  
+  .action-buttons ion-button {
+    --padding-start: 8px; 
+    --padding-end: 8px;
+    margin: 0;
+    height: auto; 
+    font-size: 0.8em; 
+    text-transform: none; 
+    --color: var(--ion-color-primary, #ff4d4d); 
+  
+    &[color="danger"] {
+      --color: var(--ion-color-danger, #eb445a); 
+    }
+  }
+  
+  ion-fab-button {
+    --background: #ff4d4d;
+    --background-activated: #e04040;
+    --color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
