@@ -1,35 +1,31 @@
+
 <ion-content>
   <div class="address-bar">
     Rua Exemplo, 123 - Bairro, Cidade
   </div>
 
-  <ion-toolbar>
-    <ion-card class="welcome-card">
-      <ion-card-content>
-        <div class="welcome-container">
-          <div>
-            <p class="welcome-text">Bem-vindo(a),</p>
-            <p class="welcome-name">Admin!</p>
-          </div>
-          <div>
-            <img src="../../assets/images/entregador.png" alt="Entregador" class="delivery-image">
-          </div>
-        </div>
-      </ion-card-content>
-    </ion-card>
-  </ion-toolbar>
+  <img src="../../assets/images/banner2.avif"
+       alt="Banner Promocional"
+       class="static-banner-image">
+
+
 
   <div class="categories-container">
-    <div class="category" style="background-color: #ff4d4d;">Burger</div>
-    <div class="category" style="background-color: #ffa726;">Pizza</div>
-    <div class="category" style="background-color: #66bb6a;">Salada</div>
-    <div class="category" style="background-color: #42a5f5;">Bebidas</div>
-    <div class="category" style="background-color: #ab47bc;">Sobremesas</div>
+    <div class="category">Burger</div>
+    <div class="category">Pizza</div>
+    <div class="category">Salada</div>
+    <div class="category">Bebidas</div>
+    <div class="category">Sobremesas</div>
+    <div class="category">Mercado</div>
   </div>
 
+
+  <!-- Lista de Restaurantes -->
   <ion-list>
     <ion-item *ngFor="let restaurante of restaurantes" (click)="abrirProdutos(restaurante)">
-      <ion-avatar slot="start"></ion-avatar>
+      <ion-avatar slot="start">
+         <img src="https://placehold.co/80x80/cccccc/ffffff?text=Logo" alt="Logo {{ restaurante.name }}">
+      </ion-avatar>
       <ion-label>
         <h2 class="restaurant-name">{{ restaurante.name }}</h2>
         <p class="restaurant-description">{{ restaurante.description }}</p>
