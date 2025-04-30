@@ -1,24 +1,35 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/crud/restaurantes"></ion-back-button>
+    </ion-buttons>
     <ion-title>Novo Restaurante</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
+<ion-content class="ion-padding">
+  <ion-list inset="true">
     <ion-item>
       <ion-label position="stacked">Nome</ion-label>
-      <ion-input [(ngModel)]="restaurante.name"></ion-input>
+      <ion-input [(ngModel)]="restaurante.name" placeholder="Ex: Pará lanches"></ion-input>
     </ion-item>
+
     <ion-item>
       <ion-label position="stacked">Descrição</ion-label>
-      <ion-textarea [(ngModel)]="restaurante.description"></ion-textarea>
+      <ion-textarea [(ngModel)]="restaurante.description" placeholder="Descreva brevemente o restaurante" rows="4"></ion-textarea>
     </ion-item>
+
     <ion-item>
       <ion-label position="stacked">Endereço</ion-label>
-      <ion-input [(ngModel)]="restaurante.address"></ion-input>
+      <ion-input [(ngModel)]="restaurante.address" placeholder="Rua, Número, Bairro, Cidade"></ion-input>
     </ion-item>
   </ion-list>
-
-  <ion-button expand="block" (click)="salvarRestaurante()">Salvar</ion-button>
 </ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <ion-button expand="block" color="danger" (click)="salvarRestaurante()">
+      Salvar Restaurante
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

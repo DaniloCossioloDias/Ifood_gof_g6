@@ -1,17 +1,20 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { 
-  IonContent, 
-  IonHeader, 
-  IonTitle, 
-  IonToolbar, 
-  IonList, 
-  IonItem, 
-  IonLabel, 
-  IonInput, 
-  IonButton, 
-  IonTextarea 
+import {
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+  IonList,
+  IonItem,
+  IonLabel,
+  IonInput,
+  IonButton,
+  IonTextarea,
+  IonButtons,
+  IonBackButton,
+  IonFooter
 } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { IRestaurant } from '../lista-restaurantes/lista-restaurantes.page';
@@ -35,6 +38,9 @@ import { RestauranteService } from 'src/app/services/restaurante.service';
     IonInput,
     IonButton,
     IonTextarea,
+    IonButtons,
+    IonBackButton,
+    IonFooter
   ],
 })
 export class NovoRestaurantePage {
@@ -42,7 +48,6 @@ export class NovoRestaurantePage {
     name: '',
     description: '',
     address: '',
-    createdAt: new Date(),
   };
 
   constructor(
@@ -51,15 +56,21 @@ export class NovoRestaurantePage {
   ) {}
 
   salvarRestaurante() {
-    const novoRestaurante: IRestaurant = {
+    if (!this.restaurante.name || !this.restaurante.address) {
+      console.error('Nome e Endereço são obrigatórios!');
+      return;
+    }
+
+    const novoRestauranteParaSalvar: IRestaurant = {
       id: Date.now(),
       name: this.restaurante.name!,
-      description: this.restaurante.description!,
+      description: this.restaurante.description || '',
       address: this.restaurante.address!,
       createdAt: new Date(),
     };
 
-    this.restauranteService.addRestaurante(novoRestaurante);
+    console.log('Salvando restaurante:', novoRestauranteParaSalvar);
+    this.restauranteService.addRestaurante(novoRestauranteParaSalvar);
 
     this.router.navigate(['/crud/restaurantes']);
   }
