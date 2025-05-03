@@ -1,32 +1,56 @@
-<ion-content>
-  <ion-list *ngIf="carrinho.length > 0; else vazio">
-    <ion-item *ngFor="let item of carrinho; let i = index">
-      <ion-label>
-        <h2>{{ item.produto.name }}</h2>
-        <p>Preço: R$ {{ item.produto.price }}</p>
-        <p>Quantidade: {{ item.quantidade }}</p>
-      </ion-label>
-      <div slot="end" class="quantity-buttons">
-        <ion-button color="warning" (click)="removerQuantidade(i)">-</ion-button>
-        <ion-button color="success" (click)="adicionarQuantidade(i)">+</ion-button>
-      </div>
-      <ion-button color="danger" slot="end" (click)="removerProduto(i)">Remover Produto</ion-button>
-    </ion-item>
+<ion-header>
+  <ion-toolbar color="danger">
+    <ion-title>Meu Carrinho</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-    <!-- Total do carrinho -->
-    <ion-item lines="full">
+<ion-content class="ion-padding">
+  <div *ngIf="carrinho.length > 0; else vazio">
+    <ion-list lines="none">
+      <ion-item *ngFor="let item of carrinho; let i = index" class="cart-item">
+        <ion-thumbnail slot="start">
+          <img [src]="item.produto.imageUrl || 'https://placehold.co/80x80?text=' + (item.produto.name ? item.produto.name.charAt(0) : '?')" alt="{{ item.produto.name || 'Produto' }}">
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{ item.produto.name || 'Nome Indisponível' }}</h2>
+          <p>R$ {{ item.produto.price | number:'1.2-2' }}</p>
+        </ion-label>
+        <div class="quantity-controls" slot="end">
+          <ion-button fill="outline" size="small" (click)="removerQuantidade(i)" class="quantity-button">
+            -
+          </ion-button>
+          <span class="quantity-display">{{ item.quantidade }}</span>
+          <ion-button fill="outline" size="small" (click)="adicionarQuantidade(i)" class="quantity-button">
+            +
+          </ion-button>
+        </div>
+         <ion-button fill="clear" color="danger" size="small" slot="end" (click)="removerProduto(i)" class="remove-button">
+            <img src="../../assets/icon/icons8-lixo-50.png" alt="Remover" class="trash-icon-img">
+         </ion-button>
+      </ion-item>
+    </ion-list>
+
+    <ion-item lines="full" class="total-summary-item">
       <ion-label><strong>Total:</strong></ion-label>
-      <ion-label slot="end"><strong>R$ {{ total | number:'1.2-2' }}</strong></ion-label>
+      <ion-label slot="end" color="success"><strong>R$ {{ total | number:'1.2-2' }}</strong></ion-label>
     </ion-item>
-  </ion-list>
 
-  <ion-button expand="block" color="success" [disabled]="total === 0" (click)="irParaPagamento()">
-    Finalizar Compra
-  </ion-button>
+  </div>
+
 
   <ng-template #vazio>
-    <ion-item>
-      <ion-label>Seu carrinho está vazio.</ion-label>
-    </ion-item>
+    <div class="empty-cart ion-text-center">
+      <ion-icon name="cart-outline"></ion-icon>
+      <p>Seu carrinho está vazio.</p>
+    </div>
   </ng-template>
 </ion-content>
+
+<ion-footer *ngIf="carrinho.length > 0" class="ion-no-border">
+  <ion-toolbar>
+    <ion-button expand="block" color="success" (click)="irParaPagamento()" [disabled]="total === 0">
+      Finalizar Compra (R$ {{ total | number:'1.2-2' }})
+      <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

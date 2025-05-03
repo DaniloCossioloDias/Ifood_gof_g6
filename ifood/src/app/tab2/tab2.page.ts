@@ -1,16 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { CartService } from '../services/cart.service';
 
-import { 
-  IonContent, 
-  IonHeader, 
-  IonTitle, 
-  IonToolbar, 
-  IonList, 
-  IonItem, 
-  IonLabel, 
-  IonButton 
+import {
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+  IonList,
+  IonItem,
+  IonLabel,
+  IonButton,
+  IonIcon,
+  IonThumbnail,
+  IonFooter
 } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 
@@ -20,15 +24,19 @@ import { Router } from '@angular/router';
   styleUrls: ['tab2.page.scss'],
   standalone: true,
   imports: [
-    IonHeader, 
-    IonToolbar, 
-    IonTitle, 
-    IonContent, 
-    IonLabel, 
-    IonList, 
-    IonItem, 
-    IonButton, 
-    CommonModule
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonLabel,
+    IonList,
+    IonItem,
+    IonButton,
+    IonIcon,
+    IonThumbnail,
+    IonFooter,
+    CommonModule,
+    FormsModule
   ]
 })
 export class Tab2Page implements OnInit {
@@ -38,50 +46,35 @@ export class Tab2Page implements OnInit {
   constructor(private cartService: CartService, private router: Router) {}
 
   ngOnInit() {
-    this.atualizarCarrinho(); 
-  }
-
-  ionViewWillEnter() {
-    this.atualizarCarrinho(); 
-  }
-
-  /**
-   * Atualiza os itens do carrinho e o total.
-   */
-  atualizarCarrinho() {
-    this.carrinho = this.cartService.getCarrinho();
-    this.total = this.cartService.getTotal(); // Atualiza o total
-  }
-
-  /**
-   * Remove uma unidade da quantidade de um produto.
-   * @param index Índice do produto no carrinho.
-   */
-  removerQuantidade(index: number) {
-    const item = this.carrinho[index];
-    if (item.quantidade > 1) {
-      item.quantidade -= 1; 
-    } else {
-      this.removerProduto(index); 
-    }
-    this.cartService.atualizarCarrinho(this.carrinho); 
     this.atualizarCarrinho();
   }
 
-  /**
-   * Adiciona uma unidade à quantidade de um produto.
-   * @param index Índice do produto no carrinho.
-   */
-  adicionarQuantidade(index: number) {
-    this.carrinho[index].quantidade += 1;
-    this.cartService.atualizarCarrinho(this.carrinho); 
-    this.atualizarCarrinho(); 
+  ionViewWillEnter() {
+    this.atualizarCarrinho();
   }
 
-  /**
-   * Remove um produto inteiro do carrinho.
-   * @param index Índice do produto a ser removido.
-   */
+  atualizarCarrinho() {
+    this.carrinho = this.cartService.getCarrinho();
+    this.total = this.cartService.getTotal();
+  }
+
+  removerQuantidade(index: number) {
+    const item = this.carrinho[index];
+    if (item.quantidade > 1) {
+      item.quantidade -= 1;
+    } else {
+      this.removerProduto(index);
+    }
+    this.cartService.atualizarCarrinho(this.carrinho);
+    this.atualizarCarrinho();
+  }
+
+  adicionarQuantidade(index: number) {
+    this.carrinho[index].quantidade += 1;
+    this.cartService.atualizarCarrinho(this.carrinho);
+    this.atualizarCarrinho();
+  }
+
   removerProduto(index: number) {
     this.cartService.removerDoCarrinho(index);
     this.atualizarCarrinho();

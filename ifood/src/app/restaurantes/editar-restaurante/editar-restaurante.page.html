@@ -1,26 +1,39 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Editar Restaurante</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/crud/restaurantes"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Editar: {{ restaurante.name || 'Restaurante' }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
+<ion-content class="ion-padding">
+  <ion-list *ngIf="restaurante.id" inset="true">
     <ion-item>
       <ion-label position="stacked">Nome</ion-label>
-      <ion-input [(ngModel)]="restaurante.name"></ion-input>
+      <ion-input [(ngModel)]="restaurante.name" placeholder="Nome do restaurante"></ion-input>
     </ion-item>
+
     <ion-item>
       <ion-label position="stacked">Descrição</ion-label>
-      <ion-textarea [(ngModel)]="restaurante.description"></ion-textarea>
+      <ion-textarea [(ngModel)]="restaurante.description" placeholder="Descreva brevemente o restaurante" rows="4"></ion-textarea>
     </ion-item>
+
     <ion-item>
       <ion-label position="stacked">Endereço</ion-label>
-      <ion-input [(ngModel)]="restaurante.address"></ion-input>
+      <ion-input [(ngModel)]="restaurante.address" placeholder="Rua, Número, Bairro, Cidade"></ion-input>
     </ion-item>
   </ion-list>
 
-  <ion-button expand="block" color="success" (click)="salvarAlteracoes()">
-    Salvar Alterações
-  </ion-button>
+  <div *ngIf="!restaurante.id" class="ion-text-center ion-padding">
+    <p>Restaurante não encontrado.</p>
+  </div>
 </ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <ion-button expand="block" color="danger" (click)="salvarAlteracoes()" [disabled]="!restaurante.id">
+      Salvar Alterações
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

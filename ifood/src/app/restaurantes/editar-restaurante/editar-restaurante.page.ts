@@ -1,17 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { 
-  IonContent, 
-  IonHeader, 
-  IonTitle, 
-  IonToolbar, 
-  IonList, 
-  IonItem, 
-  IonLabel, 
-  IonInput, 
-  IonButton, 
-  IonTextarea 
+import {
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+  IonList,
+  IonItem,
+  IonLabel,
+  IonInput,
+  IonButton,
+  IonTextarea,
+  IonButtons,
+  IonBackButton,
+  IonFooter
 } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RestauranteService } from 'src/app/services/restaurante.service';
@@ -34,16 +37,15 @@ import { IRestaurant } from '../lista-restaurantes/lista-restaurantes.page';
     IonLabel,
     IonInput,
     IonButton,
-    IonTextarea, 
+    IonTextarea,
+    IonButtons,
+    IonBackButton,
+    IonFooter
   ],
 })
-export class EditarRestaurantePage {
-  restaurante: Partial<IRestaurant> = {
-    name: '',
-    description: '',
-    address: '',
-    createdAt: new Date(),
-  };
+export class EditarRestaurantePage implements OnInit {
+  restaurante: Partial<IRestaurant> = {};
+  private restauranteId: number | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -52,31 +54,44 @@ export class EditarRestaurantePage {
   ) {}
 
   ngOnInit() {
-    this.carregarRestaurante();
-  }
-
-  carregarRestaurante() {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    const restaurante = this.restauranteService.getRestaurantes().find(r => r.id === id);
-
-    if (restaurante) {
-      this.restaurante = { ...restaurante };
+    const idParam = this.route.snapshot.paramMap.get('id');
+    if (idParam) {
+      this.restauranteId = Number(idParam);
+      this.carregarRestaurante(this.restauranteId);
     } else {
-      console.error('Restaurante não encontrado!');
+      console.error('ID do restaurante não encontrado na rota!');
       this.router.navigate(['/crud/restaurantes']);
     }
   }
 
+  carregarRestaurante(id: number) {
+    console.log('Carregando restaurante para edição, ID:', id);
+    const restauranteEncontrado = this.restauranteService.getRestaurantes().find(r => r.id === id);
+
+    if (restauranteEncontrado) {
+      this.restaurante = { ...restauranteEncontrado };
+      console.log('Restaurante carregado:', this.restaurante);
+    } else {
+      console.error('Restaurante com ID', id, 'não encontrado!');
+      this.restaurante = {};
+    }
+  }
+
   salvarAlteracoes() {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    const index = this.restauranteService.getRestaurantes().findIndex(r => r.id === id);
+    if (this.restauranteId === null) {
+       console.error('Erro ao salvar: ID do restaurante é inválido.');
+       return;
+    }
+
+    const listaDoServico = this.restauranteService.getRestaurantes();
+    const index = listaDoServico.findIndex(r => r.id === this.restauranteId);
 
     if (index !== -1) {
-      this.restauranteService.getRestaurantes()[index] = { ...this.restaurante } as IRestaurant;
-      console.log('Restaurante atualizado:', this.restaurante);
+      listaDoServico[index] = { ...this.restaurante } as IRestaurant;
+      console.log('Restaurante atualizado (direto no array do serviço):', this.restaurante);
       this.router.navigate(['/crud/restaurantes']);
     } else {
-      console.error('Erro ao salvar alterações!');
+      console.error('Erro ao salvar alterações: Restaurante não encontrado no array do serviço!');
     }
   }
 }
