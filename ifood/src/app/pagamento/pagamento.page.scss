@@ -1,34 +1,107 @@
-.payment-container {
-    padding: 16px;
-    text-align: center;
+ion-content.payment-content {
+  --background: #f4f5f8;
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+}
+
+ion-card {
+  width: 90%;
+  max-width: 400px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  ion-card-header {
+    padding-bottom: 8px;
+    .card-icon {
+      font-size: 2.5rem;
+      margin-bottom: 8px;
+    }
+    ion-card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--ion-color-dark-shade);
+    }
   }
-  
-  .payment-summary, .wallet-balance {
-    margin-bottom: 16px;
-    padding: 16px;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    background-color: #f9f9f9;
+
+  ion-card-content {
+    padding-top: 0;
+    p {
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    .total-amount {
+      color: var(--ion-color-danger);
+    }
+    .balance-amount {
+       color: var(--ion-color-success);
+    }
   }
-  
-  .payment-summary h2, .wallet-balance h2 {
-    font-size: 18px;
+}
+
+.message-container {
+  width: 90%;
+  max-width: 400px;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  ion-icon {
+    font-size: 3.5rem;
+    margin-bottom: 12px;
+  }
+
+  h3 {
+    font-size: 1.2rem;
     font-weight: bold;
-    color: #333;
     margin-bottom: 8px;
   }
-  
-  .payment-summary p, .wallet-balance p {
-    font-size: 16px;
-    color: #555;
+
+  p {
+    font-size: 0.95rem;
+    margin-bottom: 16px;
   }
-  
-  .success-message {
-    margin-top: 16px;
-    color: green;
+
+  &.success-message {
+    background: var(--ion-color-success-tint);
+    border: 1px solid var(--ion-color-success-shade);
+    h3 { color: var(--ion-color-success-shade); }
+    p { color: var(--ion-color-success-shade); }
   }
-  
-  .error-message {
-    margin-top: 16px;
-    color: red;
+
+  &.error-message { 
+     background: var(--ion-color-danger-tint); 
+     border: 1px solid var(--ion-color-danger-shade); 
+     ion-icon { color: var(--ion-color-danger); } 
+     h3 { color: var(--ion-color-danger-shade); }
+     p { color: var(--ion-color-dark-shade); } 
   }
+
+  &.generic-error-message {
+     p { color: var(--ion-color-danger-shade); }
+  }
+
+  .return-button {
+    margin-top: 10px;
+  }
+}
+
+
+ion-footer {
+  ion-toolbar {
+    --background: #fff;
+    padding: 8px 16px;
+  }
+  .pay-button {
+    height: 50px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    --border-radius: 25px;
+  }
+}

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular'; // Importação do módulo IonicModule
-import { Router } from '@angular/router'; // Importação do Router
+import { IonicModule } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-pagamento',
@@ -10,39 +11,54 @@ import { Router } from '@angular/router'; // Importação do Router
   styleUrls: ['./pagamento.page.scss'],
   standalone: true,
   imports: [
-    CommonModule, // Necessário para pipes como 'number'
-    FormsModule,  // Necessário para formulários (se necessário)
-    IonicModule   // Importação do módulo IonicModule para os componentes do Ionic
+    CommonModule,
+    FormsModule,
+    IonicModule
   ]
 })
 export class PagamentoPage implements OnInit {
+
+  static currentBalance: number = 500;
+
   total: number = 0;
   balance: number = 0;
   paymentSuccess: boolean | null = null;
   isPaymentDisabled: boolean = false;
+  hasSufficientFunds: boolean = true;
 
-  constructor(private router: Router) {} // Injeta o Router
+  constructor(private router: Router, private cartService: CartService) {}
 
   ngOnInit() {
-    this.total = 100; // Exemplo de valor total
-    this.balance = 500; // Exemplo de saldo
+    this.total = this.cartService.getTotal();
+    this.balance = PagamentoPage.currentBalance;
+    this.hasSufficientFunds = this.balance >= this.total;
+    this.paymentSuccess = null;
+    this.isPaymentDisabled = false;
+  }
+
+  ionViewWillEnter() {
+    this.ngOnInit();
   }
 
   finalizarPagamento() {
-    if (this.isPaymentDisabled) {
+    if (this.isPaymentDisabled || !this.hasSufficientFunds) {
       return;
     }
 
     if (this.balance >= this.total) {
-      this.balance -= this.total;
+      PagamentoPage.currentBalance -= this.total;
+      this.balance = PagamentoPage.currentBalance;
       this.paymentSuccess = true;
       this.isPaymentDisabled = true;
+      this.cartService.limparCarrinho();
     } else {
       this.paymentSuccess = false;
+      this.hasSufficientFunds = false;
     }
   }
 
-  voltar() {
-    window.location.href = '/tabs/tab1';
+  voltar(origem: 'sucesso' | 'erro' | 'insuficiente') {
+    const targetRoute = (origem === 'sucesso') ? '/tabs/tab1' : '/tabs/tab2';
+    this.router.navigateByUrl(targetRoute);
   }
 }

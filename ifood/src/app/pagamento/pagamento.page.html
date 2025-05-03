@@ -1,38 +1,77 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-back-button slot="start" defaultHref="/tabs/tab2" color="primary"></ion-back-button>
+  <ion-toolbar color="danger">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/tab2" color="light"></ion-back-button>
+    </ion-buttons>
     <ion-title>Pagamento</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div class="payment-container">
-    <div class="payment-summary">
-      <h2>Total da Compra</h2>
-      <p>R$ {{ total | number:'1.2-2' }}</p>
+<ion-content class="ion-padding payment-content">
+  <div class="content-wrapper">
+
+    <div *ngIf="!hasSufficientFunds" class="message-container error-message insufficient-funds-message ion-text-center">
+      <ion-icon name="warning-outline" color="danger"></ion-icon>
+      <h3>Saldo Insuficiente</h3>
+      <p>Você não tem saldo suficiente (R$ {{ balance | number:'1.2-2' }}) para cobrir o total da compra (R$ {{ total | number:'1.2-2' }}).</p>
+      <ion-button fill="outline" color="dark" (click)="voltar('insuficiente')" class="return-button">
+        Voltar ao Carrinho
+      </ion-button>
     </div>
 
-    <div class="wallet-balance">
-      <h2>Saldo Atual</h2>
-      <p>R$ {{ balance | number:'1.2-2' }}</p>
+    <div *ngIf="hasSufficientFunds">
+      <ion-card class="summary-card">
+        <ion-card-header class="ion-text-center">
+          <ion-icon name="receipt-outline" color="danger" class="card-icon"></ion-icon>
+          <ion-card-title>Resumo da Compra</ion-card-title>
+        </ion-card-header>
+        <ion-card-content class="ion-text-center">
+          <p class="total-amount">R$ {{ total | number:'1.2-2' }}</p>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="balance-card">
+        <ion-card-header class="ion-text-center">
+           <ion-icon name="wallet-outline" color="success" class="card-icon"></ion-icon>
+          <ion-card-title>Seu Saldo Atual</ion-card-title>
+        </ion-card-header>
+        <ion-card-content class="ion-text-center">
+          <p class="balance-amount">R$ {{ balance | number:'1.2-2' }}</p>
+        </ion-card-content>
+      </ion-card>
+
+      <div *ngIf="paymentSuccess === true" class="message-container success-message ion-text-center">
+        <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
+        <h3>Pagamento realizado com sucesso!</h3>
+        <p>Seu novo saldo é R$ {{ balance | number:'1.2-2' }}.</p>
+        <ion-button fill="outline" color="danger" (click)="voltar('sucesso')" class="return-button">
+          Voltar ao Início
+        </ion-button>
+      </div>
+
+      <div *ngIf="paymentSuccess === false" class="message-container error-message generic-error-message ion-text-center">
+         <ion-icon name="close-circle-outline" color="danger"></ion-icon>
+        <h3>Erro no Pagamento</h3>
+        <p>Não foi possível concluir o pagamento.</p>
+        <ion-button fill="outline" color="light" (click)="voltar('erro')" class="return-button">
+          Voltar ao Carrinho
+        </ion-button>
+      </div>
     </div>
 
-    <ion-button 
-      expand="block" 
-      color="success" 
-      [disabled]="isPaymentDisabled" 
-      (click)="finalizarPagamento()">
-      {{ isPaymentDisabled ? 'Pagamento Realizado' : 'Pagar' }}
-    </ion-button>
-
-    <div *ngIf="paymentSuccess === true" class="success-message">
-      <h3>Pagamento realizado com sucesso!</h3>
-      <ion-button expand="block" color="primary" (click)="voltar()">Voltar</ion-button>
-    </div>
-
-    <div *ngIf="paymentSuccess === false" class="error-message">
-      <h3>Saldo insuficiente para realizar o pagamento.</h3>
-      <ion-button expand="block" color="danger" (click)="voltar()">Voltar</ion-button>
-    </div>
   </div>
 </ion-content>
+
+<ion-footer *ngIf="hasSufficientFunds && paymentSuccess === null" class="ion-no-border">
+  <ion-toolbar>
+    <ion-button
+      expand="block"
+      color="success"
+      class="pay-button"
+      [disabled]="isPaymentDisabled"
+      (click)="finalizarPagamento()">
+      <ion-icon slot="start" name="shield-checkmark-outline"></ion-icon>
+      {{ isPaymentDisabled ? 'Processando...' : 'Confirmar Pagamento' }}
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
