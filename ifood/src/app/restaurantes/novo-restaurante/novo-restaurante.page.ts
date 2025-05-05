@@ -18,7 +18,7 @@ import {
 } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { IRestaurant } from '../lista-restaurantes/lista-restaurantes.page';
-import { RestauranteService } from 'src/app/services/restaurante.service';
+import { RestauranteService } from 'src/app/state/restaurant/restaurante.service';
 
 @Component({
   selector: 'app-novo-restaurante',

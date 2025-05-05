@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators, type AbstractControl, type FormGroup } from '@angular/forms';
 import {
   IonContent,
   IonHeader,
@@ -17,8 +17,12 @@ import {
   IonFooter
 } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RestauranteService } from 'src/app/services/restaurante.service';
 import { IRestaurant } from '../lista-restaurantes/lista-restaurantes.page';
+import { Store } from '@ngxs/store';
+import { AtualizarRestaurante, GetRestauranteById } from 'src/app/state/restaurant/restaurante.actions';
+import { catchError, of, switchMap, tap } from 'rxjs';
+import { RestauranteState } from 'src/app/state/restaurant/restaurante.state';
+import type { IRestauranteDadosPayload } from 'src/app/state/restaurant/novo-restaurante.payload';
 
 @Component({
   selector: 'app-editar-restaurante',
@@ -40,18 +44,37 @@ import { IRestaurant } from '../lista-restaurantes/lista-restaurantes.page';
     IonTextarea,
     IonButtons,
     IonBackButton,
-    IonFooter
+    IonFooter,
+    ReactiveFormsModule
   ],
 })
 export class EditarRestaurantePage implements OnInit {
-  restaurante: Partial<IRestaurant> = {};
+  public restaurante: IRestaurant | undefined;
+
   private restauranteId: number | null = null;
 
+  private readonly restauranteFormGroup: FormGroup;
+
+  get nome(): AbstractControl | null {
+    return this.restauranteFormGroup.get('nome');
+  }
+  
+  get descricao(): AbstractControl | null {
+    return this.restauranteFormGroup.controls['descricao'];
+  }
+  
+  get endereco(): AbstractControl | null {
+    return this.restauranteFormGroup.get('endereco');
+  }
+
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private restauranteService: RestauranteService
-  ) {}
+    @Inject(ActivatedRoute) private readonly route: ActivatedRoute,
+    @Inject(Router) private readonly router: Router,
+    @Inject(Store) private readonly store: Store,
+    @Inject(FormBuilder) private readonly formBuilder: FormBuilder
+  ) {
+    this.restauranteFormGroup = this.inicializarFormGroup();
+  }
 
   ngOnInit() {
     const idParam = this.route.snapshot.paramMap.get('id');
@@ -64,18 +87,44 @@ export class EditarRestaurantePage implements OnInit {
     }
   }
 
+  inicializarFormGroup(): FormGroup {
+    return this.formBuilder.group({
+      nome: ['', Validators.required],
+      descricao: ['', Validators.required],
+      endereco: ['', Validators.required]
+    })
+  }
+
+  carregarFormGroup(restaurante: IRestaurant) {
+    this.restauranteFormGroup.patchValue({
+      nome: restaurante.name,
+      descricao: restaurante.description,
+      endereco: restaurante.address
+    })
+  }
+
   carregarRestaurante(id: number) {
     console.log('Carregando restaurante para edição, ID:', id);
-    const restauranteEncontrado = this.restauranteService.getRestaurantes().find(r => r.id === id);
+    this.store.dispatch(new GetRestauranteById(id))
+      .pipe(
+        tap(() => {
+          console.log('Carregando restaurante')
+        }),
+        switchMap(() => {
+          this.restaurante = this.store.selectSnapshot(RestauranteState.getLastRestaurante);
+          console.log('Restaurante carregado:', this.restaurante);
 
-    if (restauranteEncontrado) {
-      this.restaurante = { ...restauranteEncontrado };
-      console.log('Restaurante carregado:', this.restaurante);
-    } else {
-      console.error('Restaurante com ID', id, 'não encontrado!');
-      this.restaurante = {};
+          if (this.restaurante)
+            this.carregarFormGroup(this.restaurante);
+
+          return of(this.restaurante);
+        }),
+        catchError((erro) => {
+          console.error('Restaurante com ID', id, 'não encontrado!');
+          return of(erro);
+        })
+      );
     }
-  }
 
   salvarAlteracoes() {
     if (this.restauranteId === null) {
@@ -83,15 +132,31 @@ export class EditarRestaurantePage implements OnInit {
        return;
     }
 
-    const listaDoServico = this.restauranteService.getRestaurantes();
-    const index = listaDoServico.findIndex(r => r.id === this.restauranteId);
-
-    if (index !== -1) {
-      listaDoServico[index] = { ...this.restaurante } as IRestaurant;
-      console.log('Restaurante atualizado (direto no array do serviço):', this.restaurante);
-      this.router.navigate(['/crud/restaurantes']);
-    } else {
-      console.error('Erro ao salvar alterações: Restaurante não encontrado no array do serviço!');
+    if (!this.nome || !this.endereco || !this.descricao || !this.restaurante) {
+      return;
     }
+
+    const payload: IRestauranteDadosPayload = {
+      nome: this.nome.value,
+      descricao: this.descricao.value,
+      endereco: this.endereco.value,
+    }
+    this.store.dispatch(new AtualizarRestaurante(payload, this.restaurante.id))
+      .pipe(
+        tap(() => {
+          console.log('Carregando restaurante')
+        }),
+        switchMap(() => {
+          console.log('Restaurante atualizado (direto no array do serviço):', this.restaurante);
+
+          this.router.navigate(['/crud/restaurantes']);
+
+          return of(this.restaurante);
+        }),
+        catchError((erro) => {
+          console.error('Erro ao salvar alterações: Restaurante não encontrado no array do serviço!');
+          return of(erro);
+        })
+      )
   }
 }

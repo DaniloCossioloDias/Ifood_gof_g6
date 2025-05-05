@@ -5,7 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { CartService } from '../services/cart.service';
 import { OrderHistoryService } from '../services/order-history.service';
-import { WalletService } from '../services/wallet.service'; 
+import { WalletService } from '../state/wallet/wallet.service'; 
 
 @Component({
   selector: 'app-pagamento',

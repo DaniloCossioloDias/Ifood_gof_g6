@@ -18,7 +18,8 @@ import {
   IonListHeader
 } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
-import { RestauranteService } from 'src/app/services/restaurante.service';
+import { RestauranteService } from 'src/app/state/restaurant/restaurante.service';
+import { lastValueFrom } from 'rxjs';
 
 export interface IRestaurant {
   id: number;
@@ -68,8 +69,8 @@ export class ListaRestaurantesPage implements OnInit {
     this.atualizarListaRestaurantes();
   }
 
-  atualizarListaRestaurantes() {
-    this.restaurantes = this.restauranteService.getRestaurantes();
+  async atualizarListaRestaurantes() {
+    this.restaurantes = await lastValueFrom(this.restauranteService.getRestaurantes());
   }
 
   novoRestaurante() {

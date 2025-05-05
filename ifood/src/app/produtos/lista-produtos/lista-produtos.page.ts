@@ -18,7 +18,7 @@ import {
 } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
-import { RestauranteService } from 'src/app/services/restaurante.service';
+import { RestauranteService } from 'src/app/state/restaurant/restaurante.service';
 import { CartService } from 'src/app/services/cart.service'; // Importação do CartService
 import { IProduct } from 'src/app/interfaces/entities/product';
 import { IRestaurant } from 'src/app/interfaces/entities/restaurant';
