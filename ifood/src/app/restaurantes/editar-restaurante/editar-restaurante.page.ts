@@ -53,7 +53,7 @@ export class EditarRestaurantePage implements OnInit {
 
   private restauranteId: number | null = null;
 
-  private readonly restauranteFormGroup: FormGroup;
+  public readonly restauranteFormGroup: FormGroup;
 
   get nome(): AbstractControl | null {
     return this.restauranteFormGroup.get('nome');

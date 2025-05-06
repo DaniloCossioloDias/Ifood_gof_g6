@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators, type AbstractControl, type FormGroup } from '@angular/forms';
 import {
   IonContent,
   IonHeader,
@@ -19,6 +19,10 @@ import {
 import { Router } from '@angular/router';
 import { IRestaurant } from '../lista-restaurantes/lista-restaurantes.page';
 import { RestauranteService } from 'src/app/state/restaurant/restaurante.service';
+import { Store } from '@ngxs/store';
+import type { IRestauranteDadosPayload } from 'src/app/state/restaurant/novo-restaurante.payload';
+import { SalvarRestaurante } from 'src/app/state/restaurant/restaurante.actions';
+import { catchError, of, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-novo-restaurante',
@@ -40,38 +44,71 @@ import { RestauranteService } from 'src/app/state/restaurant/restaurante.service
     IonTextarea,
     IonButtons,
     IonBackButton,
-    IonFooter
+    IonFooter,
+    ReactiveFormsModule
   ],
 })
 export class NovoRestaurantePage {
-  restaurante: Partial<IRestaurant> = {
-    name: '',
-    description: '',
-    address: '',
-  };
+  public restaurante: IRestaurant | undefined;
+
+  public readonly restauranteFormGroup: FormGroup;
+
+  get nome(): AbstractControl | null {
+    return this.restauranteFormGroup.get('nome');
+  }
+  
+  get descricao(): AbstractControl | null {
+    return this.restauranteFormGroup.controls['descricao'];
+  }
+  
+  get endereco(): AbstractControl | null {
+    return this.restauranteFormGroup.get('endereco');
+  }
 
   constructor(
-    private router: Router,
-    private restauranteService: RestauranteService
-  ) {}
+    @Inject(Router) private readonly router: Router,
+    @Inject(RestauranteService) private readonly restauranteService: RestauranteService,
+    @Inject(Store) private readonly store: Store,
+    @Inject(FormBuilder) private readonly formBuilder: FormBuilder
+  ) {
+    this.restauranteFormGroup = this.inicializarFormGroup();
+  }
+
+  inicializarFormGroup(): FormGroup {
+    return this.formBuilder.group({
+      nome: ['', Validators.required],
+      descricao: ['', Validators.required],
+      endereco: ['', Validators.required]
+    })
+  }
 
   salvarRestaurante() {
-    if (!this.restaurante.name || !this.restaurante.address) {
-      console.error('Nome e Endereço são obrigatórios!');
+    if (!this.nome || !this.endereco || !this.descricao) {
       return;
     }
 
-    const novoRestauranteParaSalvar: IRestaurant = {
-      id: Date.now(),
-      name: this.restaurante.name!,
-      description: this.restaurante.description || '',
-      address: this.restaurante.address!,
-      createdAt: new Date(),
-    };
+    const payload: IRestauranteDadosPayload = {
+      nome: this.nome.value,
+      descricao: this.descricao.value,
+      endereco: this.endereco.value,
+    }
 
-    console.log('Salvando restaurante:', novoRestauranteParaSalvar);
-    this.restauranteService.addRestaurante(novoRestauranteParaSalvar);
+    this.store.dispatch(new SalvarRestaurante(payload))
+      .pipe(
+        tap(() => {
+          console.log('Salvando restaurante')
+        }),
+        switchMap(() => {
+          console.log('Restaurante criado:', this.restaurante);
 
-    this.router.navigate(['/crud/restaurantes']);
+          this.router.navigate(['/crud/restaurantes']);
+
+          return of(this.restaurante);
+        }),
+        catchError((erro) => {
+          console.error('Erro ao salvar restaurante');
+          return of(erro);
+        })
+      )
   }
 }

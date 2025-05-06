@@ -1,38 +1,41 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/crud/restaurantes"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Editar: {{ restaurante.name || 'Restaurante' }}</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ng-container *ngIf="restaurante && restaurante.id; else notFound">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/crud/restaurantes"></ion-back-button>
+      </ion-buttons>
+      <ion-title>Editar: {{ restaurante.name || 'Restaurante' }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ng-form [formGroup]="restauranteFormGroup">
+    <ion-content class="ion-padding">
+      <ion-list inset="true">
+        <ion-item>
+          <ion-label position="stacked">Nome</ion-label>
+          <ion-input formControlName="nome" placeholder="Nome do restaurante"></ion-input>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label position="stacked">Descrição</ion-label>
+          <ion-textarea formControlName="descricao" placeholder="Descreva brevemente o restaurante" rows="4"></ion-textarea>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label position="stacked">Endereço</ion-label>
+          <ion-input formControlName="endereco" placeholder="Rua, Número, Bairro, Cidade"></ion-input>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ng-form>
+</ng-container>
 
-<ion-content class="ion-padding">
-  <ion-list *ngIf="restaurante.id" inset="true">
-    <ion-item>
-      <ion-label position="stacked">Nome</ion-label>
-      <ion-input [(ngModel)]="restaurante.name" placeholder="Nome do restaurante"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="stacked">Descrição</ion-label>
-      <ion-textarea [(ngModel)]="restaurante.description" placeholder="Descreva brevemente o restaurante" rows="4"></ion-textarea>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="stacked">Endereço</ion-label>
-      <ion-input [(ngModel)]="restaurante.address" placeholder="Rua, Número, Bairro, Cidade"></ion-input>
-    </ion-item>
-  </ion-list>
-
-  <div *ngIf="!restaurante.id" class="ion-text-center ion-padding">
-    <p>Restaurante não encontrado.</p>
-  </div>
-</ion-content>
-
+<ng-template #notFound class="ion-text-center ion-padding">
+  <p>Restaurante não encontrado.</p>
+</ng-template>
 <ion-footer class="ion-no-border">
   <ion-toolbar>
-    <ion-button expand="block" color="danger" (click)="salvarAlteracoes()" [disabled]="!restaurante.id">
+    <ion-button expand="block" color="danger" (click)="salvarAlteracoes()" [disabled]="!restaurante || !restaurante.id">
       Salvar Alterações
     </ion-button>
   </ion-toolbar>

@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, Validators, type AbstractControl, type FormGroup } from '@angular/forms';
 import { IonicModule } from '@ionic/angular'; 
-import { ProductService } from 'src/app/services/product.service';
+import { ProductService } from 'src/app/state/product/product.service';
 import { IProduct } from 'src/app/interfaces/entities/product';
+import type { INovoProdutoPayload } from 'src/app/state/product/novo-produto.payload';
+import { Store } from '@ngxs/store';
+import { AddProduct } from 'src/app/state/product/produto.actions';
+import { catchError, of, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-novo-produto',
@@ -17,43 +21,81 @@ import { IProduct } from 'src/app/interfaces/entities/product';
     IonicModule, 
   ],
 })
-export class NovoProdutoPage implements OnInit {
-  produto: IProduct = {
-    id: 0,
-    restaurante: {
-      id: 0,
-      name: '',
-      description: '',
-      address: '',
-      createdAt: new Date(),
-    },
-    name: '',
-    description: '',
-    price: 0,
-    available: false,
-    createdAt: new Date(),
-  };
+export class NovoProdutoPage {
+  public readonly restaurantId: number | undefined;
+
+  public readonly productFormGroup: FormGroup;
+
+  get name(): AbstractControl | null {
+    return this.productFormGroup.get('name');
+  }
+  
+  get description(): AbstractControl | null {
+    return this.productFormGroup.controls['description'];
+  }
+  
+  get price(): AbstractControl | null {
+    return this.productFormGroup.get('price');
+  }
+
+  get available(): AbstractControl | null {
+    return this.productFormGroup.get('available');
+  }
 
   constructor(
-    private route: ActivatedRoute,
-    private productService: ProductService,
-    private router: Router
-  ) {}
-
-  ngOnInit() {
+    @Inject(ActivatedRoute) private readonly route: ActivatedRoute,
+    @Inject(ProductService) private readonly productService: ProductService,
+    @Inject(Router) private readonly router: Router,
+    @Inject(FormBuilder) private readonly formBuilder: FormBuilder,
+    @Inject(Store) private readonly store: Store
+  ) {
     const restauranteId = Number(this.route.snapshot.queryParamMap.get('restauranteId'));
     if (restauranteId) {
-      this.produto.restaurante.id = restauranteId;
+      this.restaurantId = restauranteId;
     } else {
       console.error('ID do restaurante não encontrado.');
     }
+
+    this.productFormGroup = this.inicializarFormGroup();
+  }
+
+  inicializarFormGroup(): FormGroup {
+    return this.formBuilder.group({
+      restaurantId: [this.restaurantId],
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      price: [0, [Validators.required, Validators.min(0)]],
+      available: [true, Validators.required]
+    })
   }
 
   salvarProduto() {
-    this.produto.id = Math.floor(Math.random() * 1000);
+    if (!this.available || !this.description || !this.name || !this.price || !this.restaurantId) return;
 
-    this.productService.addProduct(this.produto);
+    const payload: INovoProdutoPayload = {
+      available: this.available.value,
+      description: this.description.value,
+      name: this.name.value,
+      price: this.price.value,
+      restaurantId: this.restaurantId
+    }
+    
+    this.store.dispatch(new AddProduct(payload))
+      .pipe(
+        tap(() => {
+          console.log('Criando produto')
+        }),
+        switchMap(() => {
+          console.log('Produto criado:', payload);
 
-    this.router.navigate([`/crud/produtos/${this.produto.restaurante.id}`]);
+          this.router.navigate([`/crud/produtos/${this.restaurantId}`]);
+
+          return of(null);
+        }),
+        catchError((erro) => {
+          console.error('Erro ao salvar alterações: Restaurante não encontrado no array do serviço!');
+          return of(erro);
+        })
+      )
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { 
@@ -17,7 +17,7 @@ import {
   IonBackButton 
 } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductService } from 'src/app/services/product.service';
+import { ProductService } from 'src/app/state/product/product.service';
 import { RestauranteService } from 'src/app/state/restaurant/restaurante.service';
 import { CartService } from 'src/app/services/cart.service'; // Importação do CartService
 import { IProduct } from 'src/app/interfaces/entities/product';
@@ -54,11 +54,11 @@ export class ListaProdutosPage implements OnInit {
   carrinho: IProduct[] = [];
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private productService: ProductService,
-    private restauranteService: RestauranteService,
-    private cartService: CartService
+    @Inject(ActivatedRoute) private readonly route: ActivatedRoute,
+    @Inject(Router) private readonly router: Router,
+    @Inject(ProductService) private readonly productService: ProductService,
+    @Inject(RestauranteService) private readonly restauranteService: RestauranteService,
+    @Inject(CartService) private readonly cartService: CartService
   ) {}
 
   ngOnInit() {
