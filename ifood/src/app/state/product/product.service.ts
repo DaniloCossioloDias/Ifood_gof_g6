@@ -39,8 +39,8 @@ export class ProductService {
    * Adiciona um novo produto.
    * @param product Produto a ser adicionado.
    */
-  addProduct(product: INovoProdutoPayload): Observable<IProduct> {
-    return this.http.post<IProduct>(this.baseUrl, product);
+  addProduct(product: INovoProdutoPayload, restaurantId: number): Observable<IProduct> {
+    return this.http.post<IProduct>(`${this.baseUrl}/restaurant/${restaurantId}`, product);
   }
 
   /**

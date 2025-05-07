@@ -123,7 +123,7 @@ export class EditarRestaurantePage implements OnInit {
           console.error('Restaurante com ID', id, 'não encontrado!');
           return of(erro);
         })
-      );
+      ).subscribe();
     }
 
   salvarAlteracoes() {
@@ -157,6 +157,6 @@ export class EditarRestaurantePage implements OnInit {
           console.error('Erro ao salvar alterações: Restaurante não encontrado no array do serviço!');
           return of(erro);
         })
-      )
+      ).subscribe();
   }
 }

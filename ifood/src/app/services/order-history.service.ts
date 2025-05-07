@@ -12,7 +12,7 @@ export interface OrderHistoryItem {
 })
 export class OrderHistoryService {
 
-  private orderHistory: OrderHistoryItem[] = [];
+  private readonly orderHistory: OrderHistoryItem[] = [];
 
   constructor() { }
 

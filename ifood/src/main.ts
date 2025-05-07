@@ -8,6 +8,8 @@ import { importProvidersFrom } from '@angular/core';
 import { NgxsModule } from '@ngxs/store';
 import { environment } from './environments/environment';
 import { RestauranteState } from './app/state/restaurant/restaurante.state';
+import { ProdutoState } from './app/state/product/produto.state';
+import { provideHttpClient } from '@angular/common/http';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -15,9 +17,11 @@ bootstrapApplication(AppComponent, {
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideClientHydration(),
+    provideHttpClient(),
     importProvidersFrom(NgxsModule.forRoot([
       // INSERIR STATES AQUI
-      RestauranteState
+      RestauranteState,
+      ProdutoState
     ], {developmentMode: !environment.production}))
   ],
 });

@@ -22,6 +22,12 @@ import { RestauranteService } from 'src/app/state/restaurant/restaurante.service
 import { CartService } from 'src/app/services/cart.service'; // Importação do CartService
 import { IProduct } from 'src/app/interfaces/entities/product';
 import { IRestaurant } from 'src/app/interfaces/entities/restaurant';
+import { Store } from '@ngxs/store';
+import { GetRestauranteById } from 'src/app/state/restaurant/restaurante.actions';
+import { catchError, finalize, of, switchMap, tap } from 'rxjs';
+import { RestauranteState } from 'src/app/state/restaurant/restaurante.state';
+import { DeleteProduct, GetProductsByRestaurant } from 'src/app/state/product/produto.actions';
+import { ProdutoState } from 'src/app/state/product/produto.state';
 
 @Component({
   selector: 'app-lista-produtos',
@@ -39,7 +45,6 @@ import { IRestaurant } from 'src/app/interfaces/entities/restaurant';
     IonItem,
     IonLabel,
     IonButton,
-    IonIcon,
     IonButtons,
     IonFab,
     IonFabButton,
@@ -50,39 +55,75 @@ export class ListaProdutosPage implements OnInit {
   produtos: IProduct[] = [];
   restauranteId: number | undefined;
   restaurante: IRestaurant | undefined;
-  mostrarLista: boolean = false; 
+  mostrarLista: boolean = false;
   carrinho: IProduct[] = [];
 
   constructor(
     @Inject(ActivatedRoute) private readonly route: ActivatedRoute,
     @Inject(Router) private readonly router: Router,
-    @Inject(ProductService) private readonly productService: ProductService,
-    @Inject(RestauranteService) private readonly restauranteService: RestauranteService,
+    @Inject(Store) private readonly store: Store,
     @Inject(CartService) private readonly cartService: CartService
-  ) {}
+  ) {
+    this.restauranteId = this.getRestauranteId();
+  }
 
   ngOnInit() {
-    this.atualizarListaProdutos();
+    this.fetchData();
   }
 
   ionViewWillEnter() {
-    this.atualizarListaProdutos();
+    this.fetchData();
   }
 
-  atualizarListaProdutos() {
-    this.restauranteId = Number(this.route.snapshot.paramMap.get('id'));
-
-    if (this.restauranteId) {
-      this.produtos = this.productService.getProductsByRestaurant(this.restauranteId);
-
-      this.restaurante = this.restauranteService.getRestauranteById(this.restauranteId);
-
-      if (!this.restaurante) {
-        console.error(`Restaurante com ID ${this.restauranteId} não encontrado.`);
-      }
-    } else {
-      console.error('ID do restaurante não encontrado na rota.');
+  fetchData() {
+    if (!this.restauranteId) {
+      console.error('ID do restaurante não encontrado!');
+      return;
     }
+    this.fetchRestaurante(this.restauranteId);
+    this.fetchProdutosByRestaurante(this.restauranteId);
+  }
+
+  getRestauranteId() {
+    const restauranteId = Number(this.route.snapshot.paramMap.get('id'));
+
+    return restauranteId;
+  }
+
+  fetchRestaurante(restauranteId: number) {
+    this.store.dispatch(new GetRestauranteById(restauranteId))
+      .pipe(
+        tap(() => {
+          console.log('Carregando restaurante: ', restauranteId);
+        }),
+        switchMap(() => {
+          this.restaurante = this.store.selectSnapshot(RestauranteState.getLastRestaurante);
+          console.log('Restaurante carregado:', this.restaurante);
+          return of(this.restaurante);
+        }),
+        catchError((erro) => {
+          console.error(erro);
+          return of(erro);
+        })
+      ).subscribe();
+  }
+
+  fetchProdutosByRestaurante(restauranteId: number) {
+    this.store.dispatch(new GetProductsByRestaurant(restauranteId))
+      .pipe(
+        tap(() => {
+          console.log('Carregando produtos do restaurante: ', restauranteId);
+        }),
+        switchMap(() => {
+          this.produtos = this.store.selectSnapshot(ProdutoState.getListaProdutos);
+          console.log('Produtos carregados:', this.produtos);
+          return of(this.produtos);
+        }),
+        catchError((erro) => {
+          console.error(erro);
+          return of(erro);
+        })
+      ).subscribe();
   }
 
   adicionarAoCarrinho(produto: IProduct) {
@@ -105,7 +146,24 @@ export class ListaProdutosPage implements OnInit {
   }
 
   excluirProduto(id: number) {
-    this.productService.deleteProduct(id);
-    this.atualizarListaProdutos();
+    this.store.dispatch(new DeleteProduct(id))
+      .pipe(
+        tap(() => {
+          console.log('Deletando produto: ', id);
+        }),
+        switchMap(() => {
+          console.log('Produto excluido: ', id);
+          return of(null);
+        }),
+        catchError((erro) => {
+          console.error(erro);
+          return of(erro);
+        }),
+        finalize(() => {
+          if (!this.restauranteId) return;
+
+          this.fetchProdutosByRestaurante(this.restauranteId);
+        })
+      ).subscribe();
   }
 }

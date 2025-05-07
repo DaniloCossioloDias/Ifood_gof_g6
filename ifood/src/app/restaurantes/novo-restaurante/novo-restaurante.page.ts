@@ -109,6 +109,6 @@ export class NovoRestaurantePage {
           console.error('Erro ao salvar restaurante');
           return of(erro);
         })
-      )
+      ).subscribe();
   }
 }

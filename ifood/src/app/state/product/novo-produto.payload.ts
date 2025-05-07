@@ -1,10 +1,5 @@
 export interface INovoProdutoPayload {
     /**
-     * Restaurante onde o produto foi cadastrado.
-     */
-    restaurantId: number;
-
-    /**
      * Nome do produto.
      */
     name: string;

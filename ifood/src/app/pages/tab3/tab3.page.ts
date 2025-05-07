@@ -1,12 +1,12 @@
 // Em src/app/tabs/tab3/tab3.page.ts
 
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
-import { OrderHistoryService, OrderHistoryItem } from '../../app/services/order-history.service';
-import { WalletService } from '../../app/services/wallet.service'; 
+import { OrderHistoryItem, OrderHistoryService } from 'src/app/services/order-history.service';
+import { WalletService } from 'src/app/state/wallet/wallet.service';
 
 @Component({
   selector: 'app-tab3',
@@ -21,8 +21,8 @@ export class Tab3Page implements OnInit {
   currentBalance: number = 0;
 
   constructor(
-    private orderHistoryService: OrderHistoryService,
-    private walletService: WalletService
+    @Inject(OrderHistoryService) private readonly orderHistoryService: OrderHistoryService,
+    @Inject(WalletService) private readonly walletService: WalletService
   ) {}
 
   ngOnInit() {

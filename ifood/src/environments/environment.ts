@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:8000/api',
-  restaurants: '/restaurants',
+  baseUrl: 'http://localhost:8080/api',
+  restaurants: '/restaurant',
   wallet: '/wallet',
   
 };

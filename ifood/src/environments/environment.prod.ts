@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  baseUrl: 'http://localhost:8000/api',
-  restaurants: '/restaurants',
+  baseUrl: 'http://localhost:8080/api',
+  restaurants: '/restaurant',
   wallet: '/wallet',
 };

@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./tabs/tabs.routes').then((m) => m.routes),
+    loadChildren: () => import('./pages/tabs/tabs.routes').then((m) => m.routes),
   },
   {
     path: 'pedidos',
@@ -54,8 +54,9 @@ export const routes: Routes = [
   },
   {
     path: 'tab1',
-    loadComponent: () => import('./tab1/tab1.page').then((m) => m.Tab1Page),
-  },  {
+    loadComponent: () => import('./pages/tab1/tab1.page').then((m) => m.Tab1Page),
+  },
+  {
     path: 'pagamento',
     loadComponent: () => import('./pagamento/pagamento.page').then( m => m.PagamentoPage)
   },

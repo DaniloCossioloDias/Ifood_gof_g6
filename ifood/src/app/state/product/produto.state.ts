@@ -17,7 +17,7 @@ import { AddProduct, DeleteProduct, GetProductById, GetProducts, GetProductsByRe
   }
 })
 @Injectable()
-export class RestauranteState {
+export class ProdutoState {
   constructor(@Inject(ProductService) private readonly productService: ProductService) {}
 
   @Selector()
@@ -79,7 +79,7 @@ export class RestauranteState {
   async addProduct({ patchState }: StateContext<IProdutoStateModel>, action: AddProduct): Promise<void> {
     patchState({ carregando: true, erro: undefined });
     await lastValueFrom(this.productService
-      .addProduct(action.payload))
+      .addProduct(action.payload, action.restaurantId))
       .then((product: IProduct) => {
         patchState({ lastProduto: product });
       })

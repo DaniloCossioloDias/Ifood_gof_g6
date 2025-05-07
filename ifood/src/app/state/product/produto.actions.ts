@@ -19,7 +19,7 @@ export class GetProductById {
 export class AddProduct {
   static readonly type = '[Product] AddProduct'
 
-  constructor(public payload: INovoProdutoPayload) {}
+  constructor(public payload: INovoProdutoPayload, public restaurantId: number) {}
 }
 
 export class UpdateProduct {

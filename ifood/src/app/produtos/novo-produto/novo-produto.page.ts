@@ -1,10 +1,9 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormsModule, Validators, type AbstractControl, type FormGroup } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators, type AbstractControl, type FormGroup } from '@angular/forms';
 import { IonicModule } from '@ionic/angular'; 
 import { ProductService } from 'src/app/state/product/product.service';
-import { IProduct } from 'src/app/interfaces/entities/product';
 import type { INovoProdutoPayload } from 'src/app/state/product/novo-produto.payload';
 import { Store } from '@ngxs/store';
 import { AddProduct } from 'src/app/state/product/produto.actions';
@@ -18,7 +17,8 @@ import { catchError, of, switchMap, tap } from 'rxjs';
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule, 
+    IonicModule,
+    ReactiveFormsModule
   ],
 })
 export class NovoProdutoPage {
@@ -61,7 +61,6 @@ export class NovoProdutoPage {
 
   inicializarFormGroup(): FormGroup {
     return this.formBuilder.group({
-      restaurantId: [this.restaurantId],
       name: ['', Validators.required],
       description: ['', Validators.required],
       price: [0, [Validators.required, Validators.min(0)]],
@@ -76,11 +75,10 @@ export class NovoProdutoPage {
       available: this.available.value,
       description: this.description.value,
       name: this.name.value,
-      price: this.price.value,
-      restaurantId: this.restaurantId
+      price: this.price.value
     }
     
-    this.store.dispatch(new AddProduct(payload))
+    this.store.dispatch(new AddProduct(payload, this.restaurantId))
       .pipe(
         tap(() => {
           console.log('Criando produto')
@@ -93,9 +91,9 @@ export class NovoProdutoPage {
           return of(null);
         }),
         catchError((erro) => {
-          console.error('Erro ao salvar alterações: Restaurante não encontrado no array do serviço!');
+          console.error(erro);
           return of(erro);
         })
-      )
+      ).subscribe();
   }
 }

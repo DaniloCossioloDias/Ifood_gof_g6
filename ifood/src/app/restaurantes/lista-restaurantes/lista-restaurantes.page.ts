@@ -49,8 +49,7 @@ export interface IRestaurant {
     IonButtons,
     IonFab,
     IonFabButton,
-    IonBackButton,
-    IonListHeader
+    IonBackButton
   ],
 })
 export class ListaRestaurantesPage implements OnInit {

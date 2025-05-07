@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CartService } from '../services/cart.service';
 
 import {
   IonContent,
@@ -17,6 +16,7 @@ import {
   IonFooter
 } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-tab2',
@@ -43,7 +43,10 @@ export class Tab2Page implements OnInit {
   carrinho: { produto: any; quantidade: number }[] = [];
   total: number = 0;
 
-  constructor(private cartService: CartService, private router: Router) {}
+  constructor(
+    @Inject(CartService) private readonly cartService: CartService,
+    @Inject(Router) private readonly router: Router
+  ) {}
 
   ngOnInit() {
     this.atualizarCarrinho();
