@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators, type AbstractControl, type FormGroup } from '@angular/forms';
 import { IonicModule } from '@ionic/angular'; 
-import { ProductService } from 'src/app/state/product/product.service';
 import type { INovoProdutoPayload } from 'src/app/state/product/novo-produto.payload';
 import { Store } from '@ngxs/store';
 import { AddProduct } from 'src/app/state/product/produto.actions';
@@ -44,7 +43,6 @@ export class NovoProdutoPage {
 
   constructor(
     @Inject(ActivatedRoute) private readonly route: ActivatedRoute,
-    @Inject(ProductService) private readonly productService: ProductService,
     @Inject(Router) private readonly router: Router,
     @Inject(FormBuilder) private readonly formBuilder: FormBuilder,
     @Inject(Store) private readonly store: Store

@@ -3,9 +3,9 @@ import { Injectable, Inject } from "@angular/core";
 import { State, Selector, Action, StateContext } from "@ngxs/store";
 import { lastValueFrom } from "rxjs";
 import type { IProdutoStateModel } from "./produto.models";
-import { ProductService } from "./product.service";
 import type { IProduct } from "src/app/interfaces/entities/product";
 import { AddProduct, DeleteProduct, GetProductById, GetProducts, GetProductsByRestaurant } from "./produto.actions";
+import { ProductRepository } from "./product.repository";
 
 @State<IProdutoStateModel>({
   name: 'produto',
@@ -18,7 +18,7 @@ import { AddProduct, DeleteProduct, GetProductById, GetProducts, GetProductsByRe
 })
 @Injectable()
 export class ProdutoState {
-  constructor(@Inject(ProductService) private readonly productService: ProductService) {}
+  constructor(@Inject(ProductRepository) private readonly productService: ProductRepository) {}
 
   @Selector()
   static getLastProduto(state: IProdutoStateModel): IProduct | undefined {

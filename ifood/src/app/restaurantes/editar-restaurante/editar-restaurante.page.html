@@ -8,26 +8,26 @@
     </ion-toolbar>
   </ion-header>
   
-  <ng-form [formGroup]="restauranteFormGroup">
     <ion-content class="ion-padding">
-      <ion-list inset="true">
-        <ion-item>
-          <ion-label position="stacked">Nome</ion-label>
-          <ion-input formControlName="nome" placeholder="Nome do restaurante"></ion-input>
-        </ion-item>
-    
-        <ion-item>
-          <ion-label position="stacked">Descrição</ion-label>
-          <ion-textarea formControlName="descricao" placeholder="Descreva brevemente o restaurante" rows="4"></ion-textarea>
-        </ion-item>
-    
-        <ion-item>
-          <ion-label position="stacked">Endereço</ion-label>
-          <ion-input formControlName="endereco" placeholder="Rua, Número, Bairro, Cidade"></ion-input>
-        </ion-item>
-      </ion-list>
+      <ng-form [formGroup]="restauranteFormGroup">
+        <ion-list inset="true">
+          <ion-item>
+            <ion-label position="stacked">Nome</ion-label>
+            <ion-input formControlName="nome" placeholder="Nome do restaurante"></ion-input>
+          </ion-item>
+      
+          <ion-item>
+            <ion-label position="stacked">Descrição</ion-label>
+            <ion-textarea formControlName="descricao" placeholder="Descreva brevemente o restaurante" rows="4"></ion-textarea>
+          </ion-item>
+      
+          <ion-item>
+            <ion-label position="stacked">Endereço</ion-label>
+            <ion-input formControlName="endereco" placeholder="Rua, Número, Bairro, Cidade"></ion-input>
+          </ion-item>
+        </ion-list>
+      </ng-form>
     </ion-content>
-  </ng-form>
 </ng-container>
 
 <ng-template #notFound class="ion-text-center ion-padding">

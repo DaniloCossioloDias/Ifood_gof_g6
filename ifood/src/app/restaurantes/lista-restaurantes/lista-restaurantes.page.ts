@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -15,11 +15,12 @@ import {
   IonFab,
   IonFabButton,
   IonBackButton,
-  IonListHeader
 } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
-import { RestauranteService } from 'src/app/state/restaurant/restaurante.service';
-import { lastValueFrom } from 'rxjs';
+import { catchError, finalize, of, switchMap, tap } from 'rxjs';
+import { Store } from '@ngxs/store';
+import { DeleteRestaurante, GetRestaurantes } from 'src/app/state/restaurant/restaurante.actions';
+import { RestauranteState } from 'src/app/state/restaurant/restaurante.state';
 
 export interface IRestaurant {
   id: number;
@@ -56,8 +57,8 @@ export class ListaRestaurantesPage implements OnInit {
   restaurantes: IRestaurant[] = [];
 
   constructor(
-    private router: Router,
-    private restauranteService: RestauranteService
+    @Inject(Router) private readonly router: Router,
+    @Inject(Store) private readonly store: Store
   ) {}
 
   ngOnInit() {
@@ -69,7 +70,21 @@ export class ListaRestaurantesPage implements OnInit {
   }
 
   async atualizarListaRestaurantes() {
-    this.restaurantes = await lastValueFrom(this.restauranteService.getRestaurantes());
+    this.store.dispatch(new GetRestaurantes())
+      .pipe(
+        tap(() => {
+          console.log('Carregando restaurantes');
+        }),
+        switchMap(() => {
+          this.restaurantes = this.store.selectSnapshot(RestauranteState.getListaRestaurantes);
+          console.log('Produtos carregados:', this.restaurantes);
+          return of(this.restaurantes);
+        }),
+        catchError((erro) => {
+          console.error(erro);
+          return of(erro);
+        })
+      ).subscribe();
   }
 
   novoRestaurante() {
@@ -81,8 +96,22 @@ export class ListaRestaurantesPage implements OnInit {
   }
 
   excluirRestaurante(id: number) {
-    console.log('Excluindo restaurante ID:', id);
-    this.restauranteService.deleteRestaurante(id);
-    this.atualizarListaRestaurantes();
+    this.store.dispatch(new DeleteRestaurante(id))
+      .pipe(
+        tap(() => {
+          console.log('Excluindo restaurante ID:', id);
+        }),
+        switchMap(() => {
+          console.log('restaurante Excluido ID:', id);
+          return of(null);
+        }),
+        catchError((erro) => {
+          console.error(erro);
+          return of(erro);
+        }),
+        finalize(() => {
+          this.atualizarListaRestaurantes();
+        })
+      ).subscribe();
   }
 }

@@ -2,8 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular'; 
 import { CommonModule } from '@angular/common'; 
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators, type AbstractControl, type FormGroup } from '@angular/forms'; 
-import { ProductService } from 'src/app/state/product/product.service';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators, type AbstractControl, type FormGroup } from '@angular/forms';
 import { IProduct } from 'src/app/interfaces/entities/product';
 import { Store } from '@ngxs/store';
 import { GetProductById, UpdateProduct } from 'src/app/state/product/produto.actions';
@@ -43,7 +42,6 @@ export class EditarProdutoPage implements OnInit {
 
   constructor(
     @Inject(ActivatedRoute) private readonly route: ActivatedRoute,
-    @Inject(ProductService) private readonly productService: ProductService,
     @Inject(Router) private readonly router: Router,
     @Inject(FormBuilder) private readonly formBuilder: FormBuilder,
     @Inject(Store) private readonly store: Store

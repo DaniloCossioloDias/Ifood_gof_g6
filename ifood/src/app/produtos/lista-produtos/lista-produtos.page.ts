@@ -10,15 +10,12 @@ import {
   IonItem, 
   IonLabel, 
   IonButton, 
-  IonIcon, 
   IonButtons, 
   IonFab, 
   IonFabButton,
   IonBackButton 
 } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductService } from 'src/app/state/product/product.service';
-import { RestauranteService } from 'src/app/state/restaurant/restaurante.service';
 import { CartService } from 'src/app/services/cart.service'; // Importação do CartService
 import { IProduct } from 'src/app/interfaces/entities/product';
 import { IRestaurant } from 'src/app/interfaces/entities/restaurant';

@@ -1,11 +1,11 @@
 import { Inject, Injectable } from "@angular/core";
 import { Action, Selector, State, type StateContext } from "@ngxs/store";
 import type { IRestauranteStateModel } from "./restaurante.models";
-import { RestauranteService } from "./restaurante.service";
 import type { IRestaurant } from "src/app/restaurantes/lista-restaurantes/lista-restaurantes.page";
 import { DeleteRestaurante, GetRestauranteById, GetRestaurantes, SalvarRestaurante } from "./restaurante.actions";
 import { lastValueFrom } from "rxjs";
 import type { HttpErrorResponse } from "@angular/common/http";
+import { RestauranteRepository } from "./restaurante.repository";
 
 @State<IRestauranteStateModel>({
   name: 'restaurante',
@@ -18,7 +18,7 @@ import type { HttpErrorResponse } from "@angular/common/http";
 })
 @Injectable()
 export class RestauranteState {
-  constructor(@Inject(RestauranteService) private readonly restauranteService: RestauranteService) {}
+  constructor(@Inject(RestauranteRepository) private readonly restauranteService: RestauranteRepository) {}
 
   @Selector()
   static getLastRestaurante(state: IRestauranteStateModel): IRestaurant | undefined {

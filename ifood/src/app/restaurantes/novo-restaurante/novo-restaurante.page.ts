@@ -18,7 +18,6 @@ import {
 } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { IRestaurant } from '../lista-restaurantes/lista-restaurantes.page';
-import { RestauranteService } from 'src/app/state/restaurant/restaurante.service';
 import { Store } from '@ngxs/store';
 import type { IRestauranteDadosPayload } from 'src/app/state/restaurant/novo-restaurante.payload';
 import { SalvarRestaurante } from 'src/app/state/restaurant/restaurante.actions';
@@ -56,18 +55,17 @@ export class NovoRestaurantePage {
   get nome(): AbstractControl | null {
     return this.restauranteFormGroup.get('nome');
   }
-  
+
   get descricao(): AbstractControl | null {
     return this.restauranteFormGroup.controls['descricao'];
   }
-  
+
   get endereco(): AbstractControl | null {
     return this.restauranteFormGroup.get('endereco');
   }
 
   constructor(
     @Inject(Router) private readonly router: Router,
-    @Inject(RestauranteService) private readonly restauranteService: RestauranteService,
     @Inject(Store) private readonly store: Store,
     @Inject(FormBuilder) private readonly formBuilder: FormBuilder
   ) {
