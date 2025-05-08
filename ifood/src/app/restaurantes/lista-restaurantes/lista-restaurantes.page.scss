@@ -1,8 +1,6 @@
-/* src/app/lista-restaurantes/lista-restaurantes.page.scss */
-
 ion-toolbar {
-    --background: #ff4d4d; // Cor vermelha
-    --color: #ffffff; // Cor do texto/ícones no toolbar
+    --background: #ff4d4d; 
+    --color: #ffffff; 
   
     ion-title {
       font-weight: 600;
@@ -21,7 +19,7 @@ ion-toolbar {
   
   ion-item {
     --padding-start: 16px;
-    --inner-padding-end: 8px; // Espaço antes dos botões
+    --inner-padding-end: 8px;
     --background: #ffffff;
     margin-bottom: 12px;
     border-radius: 10px;
@@ -83,9 +81,6 @@ ion-toolbar {
     }
   }
   
-  ion-fab-button {
-    --background: #ff4d4d;
-    --background-activated: #e04040;
-    --color: #ffffff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  .fab-icon {
+    background-color: white;
   }
