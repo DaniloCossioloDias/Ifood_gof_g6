@@ -1,7 +1,10 @@
 package br.ifood.models;
 
+import java.util.List;
+
 import br.ifood.payloads.restaurant.RestaurantDataPayload;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,6 +21,9 @@ public class Restaurant extends BaseEntity {
   private String description;
 
   private String address;
+
+  @OneToMany(mappedBy = "restaurante")
+  private List<Product> product;
 
   public Restaurant(RestaurantDataPayload payload) {
     this.name = payload.getName();

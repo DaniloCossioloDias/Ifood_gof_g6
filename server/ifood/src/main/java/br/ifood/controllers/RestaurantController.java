@@ -44,7 +44,7 @@ public class RestaurantController {
      *                              para a criação de um restaurante.
      * @return Retorna o restaurante criado.
      */
-    @PostMapping("/new")
+    @PostMapping("")
     public ResponseEntity<Restaurant> create(@RequestBody @Valid RestaurantDataPayload restaurantDataPayload) {
         return ResponseEntity.ok(this.restaurantService.create(restaurantDataPayload));
     }
