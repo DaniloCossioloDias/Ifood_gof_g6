@@ -6,8 +6,8 @@ export const environment = {
   production: false,
   baseUrl: 'http://localhost:8080/api',
   restaurants: '/restaurant',
+  product: '/product',
   wallet: '/wallet',
-  
 };
 
 /*

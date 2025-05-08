@@ -9,7 +9,7 @@ import type { INovoProdutoPayload } from './novo-produto.payload';
   providedIn: 'root',
 })
 export class ProductService {
-  private readonly baseUrl: string = environment.baseUrl + environment.production
+  private readonly baseUrl: string = environment.baseUrl + environment.product
   constructor(@Inject(HttpClient) private readonly http: HttpClient) {}
 
   /**
