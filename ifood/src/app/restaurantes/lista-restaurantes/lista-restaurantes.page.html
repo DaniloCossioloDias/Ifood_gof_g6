@@ -21,13 +21,10 @@
         </p>
       </ion-label>
 
-      <!-- Botões de Ação com Texto -->
       <div slot="end" class="action-buttons">
-        <!-- Botão Editar com Texto -->
         <ion-button fill="clear" size="small" (click)="editarRestaurante(restaurante.id)">
           Editar
         </ion-button>
-        <!-- Botão Excluir com Texto -->
         <ion-button fill="clear" size="small" color="danger" (click)="excluirRestaurante(restaurante.id)">
           Excluir
         </ion-button>
@@ -37,7 +34,7 @@
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="novoRestaurante()">
-      <ion-icon name="add"></ion-icon>
+      <img src="../../assets/icon/add.png" class="fab-icon" />
     </ion-fab-button>
   </ion-fab>
 </ion-content>

@@ -27,4 +27,12 @@ export class WalletService {
     }
     return false; // Saldo insuficiente
   }
+
+  /**
+   * Adiciona um valor ao saldo da carteira.
+   * @param amount Valor a ser adicionado.
+   */
+  addBalance(amount: number): void {
+    this.wallet.balance += amount;
+  }
 }

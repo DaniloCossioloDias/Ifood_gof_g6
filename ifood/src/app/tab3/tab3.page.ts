@@ -44,4 +44,9 @@ export class Tab3Page implements OnInit {
       event.target.complete();
     }, 500);
   }
+
+  adicionarSaldo() {
+    this.walletService.addBalance(1000); 
+    this.currentBalance = this.walletService.getBalance();
+  }
 }
