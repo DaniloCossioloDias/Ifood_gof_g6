@@ -52,13 +52,14 @@ docker compose up -d
 Passos para execução:
 Acesse a pasta do frontend:
 
-    ```bash
+
     cd ifood
 Instale as dependências:
 
 
-npm install
+    npm install
 
 Inicie o servidor de desenvolvimento:
 
-ionic serve
+    ionic serve
+    
