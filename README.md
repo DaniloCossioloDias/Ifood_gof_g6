@@ -14,3 +14,51 @@ O projeto tem como objetivo desenvolver um aplicativo de gerenciamento de pedido
 
 ## Diagrama ERM
 ![Diagrama Entidade e Relacionamento](./images/ifood_erm.png)
+
+## 🚀 Como Executar o Projeto
+
+O projeto está dividido em duas pastas principais:
+
+📁 `ifood/` → **Frontend** (Ionic + Angular)  
+📁 `server/ifood/` → **Backend** (Spring Boot + Docker)
+
+### 🛠️ Pré-requisitos
+
+Certifique-se de ter instalado:
+
+- [Node.js](https://nodejs.org/) (v16+)
+- [Ionic CLI](https://ionicframework.com/docs/cli)  
+  ```bash
+  npm install -g @ionic/cli
+
+## 🔧 Como Executar o Projeto
+
+### 🔙 Backend - Spring Boot + Docker  
+**📁 Caminho:** `server/ifood/`
+
+#### Passos para execução:
+
+1. Acesse a pasta do backend:
+
+   ```bash
+   cd server/ifood
+Suba os containers (como o banco de dados):
+
+docker compose up -d
+
+📲 Frontend - Ionic + Angular
+📁 Caminho: ifood/
+
+Passos para execução:
+Acesse a pasta do frontend:
+
+    ```bash
+    cd ifood
+Instale as dependências:
+
+
+npm install
+
+Inicie o servidor de desenvolvimento:
+
+ionic serve
